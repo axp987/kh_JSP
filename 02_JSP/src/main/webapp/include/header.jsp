@@ -4,10 +4,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>404 에러 처리 페이지</title>
+<title>Insert title here</title>
 </head>
 <body>
-	<h2>요청하신 페이지는 존재하지 않는 페이지입니다....</h2>
-	<!-- 경로 에러 -->
+	<div align="center">
+		<h2>여기는 헤더 영역입니다</h2>
+		<br>
+		<hr width="50%" color="red">
+		<br>
+	</div>
 </body>
 </html>
