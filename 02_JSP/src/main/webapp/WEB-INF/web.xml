@@ -16,7 +16,11 @@
     	<location>/error/error_404.jsp</location>
     </error-page>
     
+<<<<<<< HEAD
    	<error-page>
+=======
+   <error-page>
+>>>>>>> refs/remotes/origin/master
     	<error-code>500</error-code>
     	<location>/error/error_500.jsp</location>
     </error-page>
