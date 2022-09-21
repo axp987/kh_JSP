@@ -16,8 +16,9 @@
 			session.setAttribute("name", "홍길동"); // setAttribute("key값", "value");
 			session.setAttribute("addr", "서울시 중랑구 면목로");
 			
-			RequestDispatcher rd = request.getRequestDispatcher("./ex02_02.jsp");
-			rd.forward(request, response);
+			response.sendRedirect("./ex02_02.jsp");
+			//RequestDispatcher rd = request.getRequestDispatcher("./ex02_02.jsp");
+			//rd.forward(request, response);
 		}
 	}
 %>
