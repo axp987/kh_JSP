@@ -30,6 +30,9 @@ public class DeptDAO {
 	// 쿼리문을 저장할 변수
 	String sql = null;
 	
+	int result = 0;
+	
+	
 	public DeptDAO() { // 기본 생성자
 		String driver = "oracle.jdbc.driver.OracleDriver";
 		String url = "jdbc:oracle:thin:@localhost:1521:XE";
@@ -88,7 +91,78 @@ public class DeptDAO {
 	} // selectList
 	
 	
+	public int insertDept(DeptDTO dto) {
+		// 3단계: 데이터베이스에 전송할 SQL문 작성
+		sql = "insert into dept values(?, ?, ?)";
+		
+		// 4단계: SQL문을 데이터베이스 전송 객체에 저장
+		try {
+			pstmt = con.prepareStatement(sql);
+			
+			// insert문의 ? 을 채워주자
+			pstmt.setInt(1, dto.getDeptno());
+			pstmt.setString(2, dto.getDname());
+			pstmt.setString(3, dto.getLOC());
+			
+			//
+			result = pstmt.executeUpdate();
+			
+			pstmt.close(); con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return result;
+	} // insertDept()
 	
+	public int updateDept(DeptDTO dto) {
+		// 3단계: 데이터베이스에 SQL 작성
+		sql = "update dept set dname = ?, loc = ? where deptno = ?";
+		
+		try {
+			// 4단계: SQL문을 데이터베이스 전송 객체에 저장
+			pstmt = con.prepareStatement(sql);
+			
+			// ?(플레이스 홀더)에 저장될 정보 저장
+			pstmt.setString(1, dto.getDname());
+			pstmt.setString(2, dto.getLOC());
+			pstmt.setInt(3, dto.getDeptno());
+			
+			// 5단계: SQL문을 데이터베이스에 전송 및 실행
+			result = pstmt.executeUpdate();
+			
+			pstmt.close(); con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 	
-	
+	// 매개변수로 넘어온 부서번호를 삭제하는 메소드
+	public int deleteDept(int dno) {
+		int result = 0;
+		
+		// 3단계: 쿼리문 작성
+		sql ="delete from dept where deptno = ?";
+		
+		try {
+			// 4단계: sql문을 데이터베이스에 전송 객체에 저장
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, dno);
+			
+			// 5단계: sql문을 데이터베이스에 전송 및 실행
+			result = pstmt.executeUpdate();
+			
+			// 6단계: 사용되었던 자원 종료시키기
+			pstmt.close(); con.close();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	} // deleteDept()
 }
