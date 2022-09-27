@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 public class EmpDAO {
 	private static EmpDAO instance;
@@ -109,35 +110,6 @@ public class EmpDAO {
 		return list;
 	}
 
-	public EmpDTO getContentList(int num) {
-		EmpDTO dto = new EmpDTO();
-
-		try {
-			sql = "select * from emp where empno = ?";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, num);
-			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				dto.setEmpno(rs.getInt("empno"));
-				dto.setEname(rs.getString("ename"));
-				dto.setJob(rs.getString("job"));
-				dto.setMgr(rs.getInt("mgr"));
-				dto.setDate(rs.getString("hiredate"));
-				dto.setSal(rs.getInt("sal"));
-				dto.setComm(rs.getInt("comm"));
-				dto.setDeptno(rs.getInt("deptno"));
-			}
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			closeConn(rs, pstmt, con);
-		}
-
-		return dto;
-	}
-
 	// EMP 테이블에서 담당업무
 	public List<String> getJobList() {
 		List<String> jobList = new ArrayList<String>();
@@ -160,7 +132,7 @@ public class EmpDAO {
 
 
 		return jobList;
-	}
+	} //getJobList
 
 	// EMP 테이블에서 담당업무가 "MANAGER" 인 사원을 조회하는 메소드
 	public List<EmpDTO> getMgrList() {
@@ -245,4 +217,102 @@ public class EmpDAO {
 		}
 		return result;
 	} //setInsertEmp
+	
+	public EmpDTO getContentList(int num) {
+		EmpDTO dto = new EmpDTO();
+		openConn();
+		try {
+			sql = "select * from emp where empno = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				dto.setEmpno(rs.getInt("empno"));
+				dto.setEname(rs.getString("ename"));
+				dto.setJob(rs.getString("job"));
+				dto.setMgr(rs.getInt("mgr"));
+				dto.setDate(rs.getString("hiredate"));
+				dto.setSal(rs.getInt("sal"));
+				dto.setComm(rs.getInt("comm"));
+				dto.setDeptno(rs.getInt("deptno"));
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+
+		return dto;
+	} //getContentList
+	
+	public List<EmpDTO> getManager() {
+		List<EmpDTO> list = new ArrayList<EmpDTO>();
+		
+		try {
+			sql = "select distinct(e2.empno), e2.ename from emp e1 join emp e2 on e1.mgr = e2.empno";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				EmpDTO dto = new EmpDTO();
+				dto.setEmpno(rs.getInt("empno"));
+				dto.setEname(rs.getString("ename"));
+				
+				list.add(dto);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	} //getManager()
+	
+	
+	public int setUpdateList(String arr, int no) {
+		StringTokenizer st = new StringTokenizer(arr, " ");
+		openConn();
+		int result = 0;
+		try {
+			sql = "update emp set ename = ?, job = ?, mgr = ?, sal = ?, comm = ?, deptno = ? where empno = ?";
+			pstmt = con.prepareStatement(sql);
+			while(st.hasMoreTokens()) {
+				pstmt.setString(1, st.nextToken());
+				pstmt.setString(2, st.nextToken());
+				pstmt.setInt(3, Integer.parseInt(st.nextToken()));
+				pstmt.setInt(4, Integer.parseInt(st.nextToken()));
+				pstmt.setInt(5, Integer.parseInt(st.nextToken()));
+				pstmt.setInt(6, Integer.parseInt(st.nextToken()));
+			}
+			pstmt.setInt(7, no);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	} //setUpdateList()
+	
+	public void setDelete(int no) {
+		openConn();
+		
+		try {
+			sql = "delete from emp where empno = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(pstmt, con);
+		}
+		
+	}
 }

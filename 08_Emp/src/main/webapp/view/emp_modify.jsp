@@ -1,14 +1,13 @@
 <%@page import="com.emp.model.DeptDTO"%>
-<%@page import="java.util.List"%>
 <%@page import="com.emp.model.EmpDTO"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <% 
-	EmpDTO contentList = (EmpDTO)request.getAttribute("content");
-	List<String> joblist = (List<String>)request.getAttribute("job");
-	List<EmpDTO> mgrlist = (List<EmpDTO>)request.getAttribute("mgr");
-	List<DeptDTO> deptlist = (List<DeptDTO>)request.getAttribute("dept");
-	
+	List<String> joblist = (List<String>)request.getAttribute("jList");
+	List<EmpDTO> mgrlist = (List<EmpDTO>)request.getAttribute("mList");
+	List<DeptDTO> deptlist = (List<DeptDTO>)request.getAttribute("dList");
+	EmpDTO contentList = (EmpDTO)request.getAttribute("modify");
 %>
 <!DOCTYPE html>
 <html>
@@ -18,9 +17,10 @@
 </head>
 <body>
 	<div align="center">
-		<hr width="50%" color="yellow">
-			<h2>상세 정보</h2>
-		<hr width="50%" color="yellow">
+		<hr width="50%" color="lightgray">
+			<h3>EMP 테이블 사원 정보 수정 폼 페이지</h3>
+		<hr width="50%" color="lightgray">
+		<br> <br>
 		<form method="post" action="<%=request.getContextPath() %>/update_ok.do">
 			<table border="1" cellspacing="0" width="300">
 				<tr>
@@ -30,13 +30,13 @@
 					
 					<tr>
 						<th>사원명</th>
-						<td><input type="text" name="t" value="<%=contentList.getEname() %>"></td>
+						<td><input type="text" name="name" value="<%=contentList.getEname() %>"></td>
 					</tr>
 					
 					<tr>
 						<th>담당업무</th>
 						<td>
-							<select name="t">
+							<select name="job">
 								<%
 									if(joblist.size() == 0) {
 								%>
@@ -57,7 +57,7 @@
 													<%=str %>
 												</option>
 								<%
-											} // if
+											}
 										} //for
 									} //if
 								%>
@@ -67,7 +67,7 @@
 					<tr>
 						<th>관리자No</th>
 						<td>
-							<select name="t">
+							<select name="mgr">
 								<%
 									if(mgrlist.size() == 0) {
 								%>
@@ -79,7 +79,7 @@
 											if(contentList.getMgr() == 0) {
 								%>
 												<option value="<%=contentList.getMgr() %>">
-													관리자
+													최고관리자	
 												</option>
 												
 								<%			
@@ -107,16 +107,16 @@
 					</tr>
 					<tr>
 						<th>급 여</th>
-						<td><input type="text" name="t" value="<%=contentList.getSal() %>" ></td> 
+						<td><input type="text" name="sal" value="<%=contentList.getSal() %>" ></td> 
 					</tr>
 					<tr>
 						<th>보 너 스</th>
-						<td><input type="text" name="t" value="<%=contentList.getComm() %>"></td>
+						<td><input type="text" name="comm" value="<%=contentList.getComm() %>"></td>
 					</tr>
 					<tr>
 						<th>부 서</th>
 						<td>
-							<select name="t">
+							<select name="dept">
 								<%
 									if(deptlist.size() == 0) {
 								%>
@@ -153,12 +153,11 @@
 							<input type="submit" value="수 정">
 							&nbsp;&nbsp;
 							<input type="button" value="초기화" onclick="location.reload()">
-							&nbsp;&nbsp;
-							<input type="button" value="삭 제" onclick="location.href='<%=request.getContextPath()%>/delete.do?no=<%=contentList.getEmpno()%>'">
 						</td>
 					</tr>
 			</table>
 		</form>
 	</div>
+		
 </body>
 </html>

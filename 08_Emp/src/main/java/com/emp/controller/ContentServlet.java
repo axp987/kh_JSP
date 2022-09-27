@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.emp.model.DeptDTO;
 import com.emp.model.EmpDAO;
 import com.emp.model.EmpDTO;
 
@@ -36,11 +37,25 @@ public class ContentServlet extends HttpServlet {
 		EmpDAO dao = EmpDAO.getInstance();
 		
 		
-		//int num = Integer.parseInt(request.getParameter("no"));
+		int num = Integer.parseInt(request.getParameter("no"));
 		
-		//EmpDTO dto = dao.getContentList(num);
+		EmpDTO dto = dao.getContentList(num);
 		
-	
+		List<String> jobl = dao.getJobList();
+		
+		// mgr이 담당자 찾기
+		List<EmpDTO> mgrSearch = dao.getManager();
+		
+		
+		// 부서 테이블 전체 리스트 조회
+		List<DeptDTO> deptList = dao.getDeptList();
+		
+		
+		request.setAttribute("content", dto);
+		request.setAttribute("job", jobl);
+		request.setAttribute("mgr", mgrSearch);
+		request.setAttribute("dept", deptList);
+		
 		RequestDispatcher rd = request.getRequestDispatcher("view/Emp_content.jsp");
 		rd.forward(request, response);
 		

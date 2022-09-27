@@ -44,6 +44,7 @@
 								} else {
 									for(int i=0; i<joblist.size(); i++) {
 										String str = joblist.get(i);
+									
 							%>
 										<option value="<%=str %>"><%=str %></option>
 							<%
