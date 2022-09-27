@@ -15,6 +15,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript">
+	onpopstate = function(event) {
+		//history.back();
+		location.href="select.do";
+		//location.reload();
+	}
+	
+</script>
 </head>
 <body>
 	<div align="center">
@@ -79,7 +87,7 @@
 											if(contentList.getMgr() == 0) {
 								%>
 												<option value="<%=contentList.getMgr() %>">
-													관리자
+													왕
 												</option>
 												
 								<%			

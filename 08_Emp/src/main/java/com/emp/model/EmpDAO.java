@@ -247,7 +247,7 @@ public class EmpDAO {
 		return dto;
 	} //getContentList
 	
-	public List<EmpDTO> getManager() {
+	public List<EmpDTO> getManager() { // 이게 관리자 찾는거임 위에 이상한거 보지마!
 		List<EmpDTO> list = new ArrayList<EmpDTO>();
 		
 		try {
@@ -273,8 +273,9 @@ public class EmpDAO {
 	
 	public int setUpdateList(String arr, int no) {
 		StringTokenizer st = new StringTokenizer(arr, " ");
-		openConn();
 		int result = 0;
+		
+		openConn();
 		try {
 			sql = "update emp set ename = ?, job = ?, mgr = ?, sal = ?, comm = ?, deptno = ? where empno = ?";
 			pstmt = con.prepareStatement(sql);
@@ -297,15 +298,15 @@ public class EmpDAO {
 		return result;
 	} //setUpdateList()
 	
-	public void setDelete(int no) {
+	public int setDelete(int no) {
 		openConn();
-		
+		int result = 0;
 		try {
 			sql = "delete from emp where empno = ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, no);
 			
-			pstmt.executeUpdate();
+			result = pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -313,6 +314,6 @@ public class EmpDAO {
 		} finally {
 			closeConn(pstmt, con);
 		}
-		
+		return result;
 	}
 }

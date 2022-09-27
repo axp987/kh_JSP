@@ -1,4 +1,4 @@
-package com.emp.controller;
+package com.board.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -9,19 +9,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.emp.model.EmpDAO;
+import com.board.model.BoardDAO;
 
 /**
- * Servlet implementation class DeleteServlet
+ * Servlet implementation class PasswordServlet
  */
-@WebServlet("/delete.do")
-public class DeleteServlet extends HttpServlet {
+@WebServlet("/password.do")
+public class PasswordServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeleteServlet() {
+    public PasswordServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,27 +33,21 @@ public class DeleteServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 		
-		int num = Integer.parseInt(request.getParameter("no"));
+		int no = Integer.parseInt(request.getParameter("num"));
 		
-		EmpDAO dao = EmpDAO.getInstance();
-		
-		int check = dao.setDelete(num);
+		BoardDAO dao = BoardDAO.getInstance();
+		String check = dao.searchPwd(no);
 		
 		PrintWriter out = response.getWriter();
-		
-		if(check > 0) {
-			out.println("<script>");
-			out.println("alert('삭제 성공')");
-			out.println("location.href='select.do'");
-			out.println("</script>");
-		}
-		else {
-			out.println("<script>");
-			out.println("alert('삭제 실패')");
-			out.println("history.back()");
-			out.println("</script>");
-		}
-		
+		out.println("<script>");
+		out.println("let pwd = prompt('패스워드를 입력해주세요.');");
+		out.println("if(pwd == null) {");
+		out.println("history.back();");
+		out.println("} else {");
+		//out.println("if(pwd ==" + check + ") {");
+		//out.println("location.href='" + request.getContextPath() + "/insert.do'");
+		out.println("}");
+		out.println("</script>");
 	}
 
 }

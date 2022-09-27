@@ -1,27 +1,30 @@
-package com.emp.controller;
+package com.board.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.border.Border;
 
-import com.emp.model.EmpDAO;
+import com.board.model.BoardDAO;
+import com.board.model.BoardDTO;
 
 /**
- * Servlet implementation class DeleteServlet
+ * Servlet implementation class ContentServlet
  */
-@WebServlet("/delete.do")
-public class DeleteServlet extends HttpServlet {
+@WebServlet("/content.do")
+public class ContentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeleteServlet() {
+    public ContentServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,27 +36,18 @@ public class DeleteServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 		
-		int num = Integer.parseInt(request.getParameter("no"));
+		int no = Integer.parseInt(request.getParameter("num"));
 		
-		EmpDAO dao = EmpDAO.getInstance();
+		BoardDAO dao = BoardDAO.getInstance();
 		
-		int check = dao.setDelete(num);
+		BoardDTO conList = dao.getContentList(no);
+		dao.getCount(no);
 		
 		PrintWriter out = response.getWriter();
 		
-		if(check > 0) {
-			out.println("<script>");
-			out.println("alert('삭제 성공')");
-			out.println("location.href='select.do'");
-			out.println("</script>");
-		}
-		else {
-			out.println("<script>");
-			out.println("alert('삭제 실패')");
-			out.println("history.back()");
-			out.println("</script>");
-		}
-		
+		request.setAttribute("content", conList);
+		RequestDispatcher rd = request.getRequestDispatcher("content.jsp");
+		rd.forward(request, response);
 	}
 
 }

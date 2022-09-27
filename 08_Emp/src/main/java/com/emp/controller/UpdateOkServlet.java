@@ -38,8 +38,8 @@ public class UpdateOkServlet extends HttpServlet {
 		String []num = request.getParameterValues("t");
 		String result = "";
 		for(int i=0; i<num.length; i++) {
-			Object Inum = num[i];
-			result += (Inum+ " ");
+			Object Onum = num[i];
+			result += (Onum+ " ");
 		}
 		System.out.println(result);
 		
@@ -51,7 +51,8 @@ public class UpdateOkServlet extends HttpServlet {
 		if(check > 0) {
 			out.println("<script>");
 			out.println("alert('수정 성공')");
-			out.println("location.href='select.do'");
+//			out.println("location.href='select.do'");
+			out.println("location.href='content.do?no=" + no1 + "'");
 			out.println("</script>");
 		} else {
 			out.println("<script>");
