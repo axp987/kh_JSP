@@ -21,6 +21,5 @@
 		<!-- /select는 SelectServlet를 의미 -->
 	</div>
 
-
 </body>
 </html>
