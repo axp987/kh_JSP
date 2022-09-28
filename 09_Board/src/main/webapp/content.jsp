@@ -32,11 +32,6 @@
 		<form method="post" action="">
 			<table border="1" cellspacing="0">
 				<tr>
-					<th>No.</th>
-					<td><%=contentList.getNo() %></td>
-				</tr>
-			
-				<tr>
 					<th>작성자</th>
 					<td><%=contentList.getWriter() %></td>
 				</tr>
@@ -68,6 +63,25 @@
 				</tr>
 				
 				<tr>
+					<th>조회수</th>
+					<td><%=contentList.getHit() %></td>
+				</tr>
+				<tr>
+				<%
+					if(contentList.getUpdate() == null) {
+				%>
+						<th>작성일자</th>
+						<td><%=contentList.getDate() %></td>
+				<%
+					} else {
+				%>
+						<th>수정일자</th>
+						<td><%=contentList.getUpdate() %></td>
+				<%
+					}
+				%>
+				</tr>
+				<tr>
 					<th>작성일자</th>
 					<td><%=contentList.getDate().substring(0, 10) %></td>
 				</tr>
@@ -77,7 +91,7 @@
 						<input type="button" id="btnin" value="수 정 하 기(미완)" onclick=showPopup()>
 						<input type="button" value="수 정 하 기" onclick="location.href='update2.do?num=<%=contentList.getNo()%>'">
 						<input type="button" value="삭 제 하 기" onclick="if(confirm('정말로 삭제하시겠습니까?')) 
-													{ location.href='delte.do?num=<%=contentList.getNo()%>' } 
+													{ location.href='delete.jsp?num=<%=contentList.getNo()%>' } 
 													else { return }">
 						<input type="button" value="뒤 로 가 기" onclick="location.href='<%=request.getContextPath() %>/select.do'">
 					</td>

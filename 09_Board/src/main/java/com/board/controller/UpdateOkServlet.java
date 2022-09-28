@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.board.model.BoardDAO;
+import com.board.model.BoardDTO;
 
 /**
  * Servlet implementation class UpdateOkServlet
@@ -27,6 +28,9 @@ public class UpdateOkServlet extends HttpServlet {
     }
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		// 수정 폼페이지에서 넘어온 정보들을 DB에 저장시키는 비지니스 로직
+		// 한글 처리 작업 진행
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 		
@@ -34,21 +38,25 @@ public class UpdateOkServlet extends HttpServlet {
 		int no = Integer.parseInt(request.getParameter("num"));
 		String pwd = request.getParameter("pw");
 		
-		// 현재 패스워드와 입력한 패스워드 비교
-		
-		
 		String []alls = request.getParameterValues("all");
 		String result = "";
 		for(int i=0; i<alls.length; i++) {
-			Object obj = alls[i];
-			result += (obj + "^");
+			String obj = alls[i];
+			result += (obj + "⁴");
 		}
+		// 작성자, 제목, 내용
+		BoardDTO dto = new BoardDTO();
+		dto.setNo(no);
+		dto.setPwd(pwd);
+		dto.setWriter(alls[0]);
+		dto.setTitle(alls[1]);
+		dto.setCont(alls[2]);
+		
 		
 		BoardDAO dao = BoardDAO.getInstance();
-		int check = dao.setUpdate(no, result, pwd);
+		int check = dao.setUpdate2(dto);
 		
 		PrintWriter out = response.getWriter();
-		
 		if(check > 0) {
 			out.println("<script>");
 			out.println("alert('수정 완료')");
@@ -56,7 +64,7 @@ public class UpdateOkServlet extends HttpServlet {
 			out.println("</script>");
 		} else {
 			out.println("<script>");
-			out.println("alert('수정 실패')");
+			out.println("alert('패스워드를 확인해주세요')");
 			out.println("history.back()");
 			out.println("</script>");
 		}

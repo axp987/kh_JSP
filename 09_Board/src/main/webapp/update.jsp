@@ -14,12 +14,8 @@
 			<h3>게시판 수정 페이지</h3>
 		<hr width="50%" color="blue">
 		<form method="post" action="<%=request.getContextPath() %>/update_ok.do?num=<%=updateList.getNo() %>">
+			<input type="hidden" name="num" value="<%=updateList.getNo() %>">
 			<table border="1" cellspacing="0">
-				<tr>
-					<th>No.</th>
-					<td><%=updateList.getNo() %></td>
-				</tr>
-			
 				<tr>
 					<th>작성자</th>
 					<td><input type="text" name="all" value=<%=updateList.getWriter() %>></td>

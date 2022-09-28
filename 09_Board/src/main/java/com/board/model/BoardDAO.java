@@ -205,7 +205,7 @@ public class BoardDAO {
 	
 	// 수정글 업데이트
 	public int setUpdate(int no, String result, String pwd) {
-		StringTokenizer st = new StringTokenizer(result, "^");
+		StringTokenizer st = new StringTokenizer(result, "⁴");
 		openConn();
 		int ch = 0;
 		String pwCheck = ""; 
@@ -242,6 +242,38 @@ public class BoardDAO {
 		return ch;
 	} // setUpdate
 
+	public int setUpdate2(BoardDTO dto) {
+		int result = 0;
+		openConn();
+		try {
+			sql ="select * from board where board_no = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, dto.getNo());
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				if(dto.getPwd().equals(rs.getString("board_pwd"))) {
+					sql = "update board set board_title = ?, board_cont = ?, board_update = sysdate where board_no = ?";
+					pstmt = con.prepareStatement(sql);
+					pstmt.setString(1, dto.getTitle()); // 작성자
+					pstmt.setString(2, dto.getCont()); // 내용
+					pstmt.setInt(3, dto.getNo());
+					
+					result = pstmt.executeUpdate();
+				} else { // 패스워드가 틀렸을 때
+					result = -1;
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		return result;
+	}
+	
+	
 	// 게시글 작성
 	public int setInsertList(String result) {
 		StringTokenizer st = new StringTokenizer(result, "⁴");
@@ -281,6 +313,51 @@ public class BoardDAO {
 		return check;
 	} // setInsertList()
 	
+	// board 테이블에서 게시글 번호에 해당하는 게시글을 삭제하는 메소드
+	public int deleteBoard(String []result) {
+		int check = 0;
+		openConn();
+		try {
+			sql ="select * from board where board_no = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(result[0]));
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				if(result[1].equals(rs.getString("board_pwd"))) {
+					sql = "delete from board where board_no = ?";
+					pstmt = con.prepareStatement(sql);
+					pstmt.setInt(1, Integer.parseInt(result[0]));
+					check = pstmt.executeUpdate();
+				} else {
+					check = -1;
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		return check;
+		
+	} //deleteBoard()
 	
-	
+	// board 테이블에서 중간의 게시글 삭제 시 글번호 재정렬하는 메소드
+	public void boardSquence(String []result) {
+		openConn();
+		
+		try {
+			sql = "update board set board_no = board-1 where board_no > ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(result[0]));
+			pstmt.executeQuery();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		
+	}
 }
