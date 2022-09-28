@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import com.board.model.BoardDAO;
 
@@ -129,6 +130,7 @@ public class BoardDAO {
 				dto.setWriter(rs.getString("board_writer"));
 				dto.setTitle(rs.getString("board_title"));
 				dto.setCont(rs.getString("board_cont"));
+				dto.setPwd(rs.getString("board_pwd"));
 				dto.setHit(rs.getInt("board_hit"));
 				dto.setDate(rs.getString("board_date"));
 				dto.setUpdate(rs.getString("board_update"));
@@ -149,21 +151,22 @@ public class BoardDAO {
 		int result = 0;
 		int count = 0;
 		openConn();
-		
+		//update board set board_hit = board_hit + 1 where board_no = ?
 		try {
-			sql = "select board_hit from board where board_no = ?";
+//			sql = "select board_hit from board where board_no = ?";
+//			pstmt = con.prepareStatement(sql);
+//			pstmt.setInt(1, no);
+//			
+//			rs = pstmt.executeQuery();
+//			if(rs.next()) {
+//				count = rs.getInt(1);
+//			}
+			
+			//sql = "update board set board_hit = ? where board_no = ?";
+			sql = "update board set board_hit = board_hit + 1 where board_no = ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, no);
-			
-			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				count = rs.getInt(1);
-			}
-			
-			sql = "update board set board_hit = ? where board_no = ?";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, count+1);
-			pstmt.setInt(2, no);
+			//pstmt.setInt(2, no);
 			
 			pstmt.executeUpdate();
 			
@@ -176,35 +179,7 @@ public class BoardDAO {
 	} // getCount() 
 	
 	
-//	public int setUpdateList(int no) {
-//		BoardDTO dto = new BoardDTO();
-//		openConn();
-//		
-//		try {
-//			sql = "select * from board where board_no = ?";
-//			pstmt = con.prepareStatement(sql);
-//			pstmt.setInt(1, no);
-//			
-//			rs = pstmt.executeQuery();
-//			if(rs.next()) {
-//				dto.setNo(rs.getInt("board_no"));
-//				dto.setWriter(rs.getString("board_writer"));
-//				dto.setTitle(rs.getString("board_title"));
-//				dto.setCont(rs.getString("board_cont"));
-//				dto.setHit(rs.getInt("board_hit"));
-//				dto.setDate(rs.getString("board_date"));
-//				dto.setUpdate(rs.getString("board_update"));
-//			}
-//			
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} finally {
-//			closeConn(rs, pstmt, con);
-//		}
-//		return dto;
-//		
-//	} // setUpdateList();
+
 	
 	public String searchPwd(int no) {
 		openConn();
@@ -227,4 +202,68 @@ public class BoardDAO {
 		}
 		return result;
 	}
+	
+	// 수정글 업데이트
+	public int setUpdate(int no, String result) {
+		StringTokenizer st = new StringTokenizer(result, "^");
+		openConn();
+		int ch = 0;
+		try {
+			sql = "update board set board_writer = ?, board_title = ?, board_cont = ?, board_update = sysdate where board_no = ?";
+			pstmt = con.prepareStatement(sql);
+			while(st.hasMoreTokens()) {
+				pstmt.setString(1, st.nextToken()); // 작성자
+				pstmt.setString(2, st.nextToken()); // 작성자
+				pstmt.setString(3, st.nextToken());
+			}
+			pstmt.setInt(4, no);
+			
+			ch = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		return ch;
+	} // setUpdate
+
+	// 게시글 작성
+	public int setInsertList(String result) {
+		StringTokenizer st = new StringTokenizer(result, "⁴");
+		openConn();
+		int count = 0;
+		int check = 0;
+		
+		try {
+			sql = "select max(board_no) from board";
+			pstmt = con.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+			System.out.println(count);
+			
+			sql = "insert into board values (?, ?, ?, ?, ?, default, sysdate, sysdate)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, count+1);
+			// 작성자, 제목, 내용, 비밀번호, 
+			while(st.hasMoreTokens()) {
+				pstmt.setString(2, st.nextToken());
+				pstmt.setString(3, st.nextToken());
+				pstmt.setString(4, st.nextToken());
+				pstmt.setString(5, st.nextToken());
+			}
+			
+			check = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		return check;
+	} // setInsertList()
 }

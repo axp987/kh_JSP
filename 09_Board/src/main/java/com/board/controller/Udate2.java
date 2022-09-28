@@ -13,32 +13,33 @@ import com.board.model.BoardDAO;
 import com.board.model.BoardDTO;
 
 /**
- * Servlet implementation class UpdateServlet
+ * Servlet implementation class Udate2
  */
-@WebServlet("/update.do")
-public class UpdateServlet extends HttpServlet {
+@WebServlet("/update2.do")
+public class Udate2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdateServlet() {
+    public Udate2() {
         super();
         // TODO Auto-generated constructor stub
     }
 
 	/**
-	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int no = Integer.parseInt(request.getParameter("num"));
-	
-		BoardDAO dao = BoardDAO.getInstance();
-		BoardDTO list = dao.getContentList(no);
+		int board_no = Integer.parseInt(request.getParameter("num").trim());
 		
-		request.setAttribute("UpdateContent", list);
+		BoardDAO dao = BoardDAO.getInstance();
+		BoardDTO content =  dao.getContentList(board_no);
+		
+		request.setAttribute("UpdateContent", content);
 		RequestDispatcher rd = request.getRequestDispatcher("update.jsp");
 		rd.forward(request, response);
 	}
+
 
 }

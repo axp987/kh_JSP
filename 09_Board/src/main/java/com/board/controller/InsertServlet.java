@@ -1,11 +1,16 @@
 package com.board.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.board.model.BoardDAO;
+import com.board.model.BoardDTO;
 
 /**
  * Servlet implementation class InsertServlet
@@ -30,18 +35,29 @@ public class InsertServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 		
-//		String []arr = request.getParameterValues("all");
-//		String story = request.getParameter("point");
-//		String result = "";
-//		
-//		for(int i=0; i<arr.length; i++) {
-//			String all = arr[i];
-//			result += (all + " ");
-//		}
-//		System.out.println(result);
-//		System.out.println(story);
+		BoardDAO dao = BoardDAO.getInstance();
 		
-		System.out.println("환영합니다.");
+		
+		String []arr = request.getParameterValues("all");
+		String result = "";
+		
+		for(int i=0; i<arr.length; i++) {
+			String all = arr[i];
+			result += (all + "⁴");
+		}
+		
+		int check = dao.setInsertList(result);
+		PrintWriter out = response.getWriter();
+		if(check > 0) {
+			out.println("<script>");
+			out.println("alert('작성 완료')");
+			out.println("location.href='select.do'");
+			out.println("</script>");
+		} else {
+			out.println("<script>");
+			out.println("alert('작성 실패')");
+			out.println("history.back()");
+			out.println("</script>");
+		}
 	}
-
 }

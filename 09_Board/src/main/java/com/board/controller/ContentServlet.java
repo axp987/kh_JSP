@@ -33,6 +33,9 @@ public class ContentServlet extends HttpServlet {
 	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// get 방식으로 넘어온 글번호에 해당하는 게시글을
+		// DB에서 조회하여 게시글 상세정보를 view page로
+		// 이동시키는 비지니스 로직
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 		
@@ -40,8 +43,8 @@ public class ContentServlet extends HttpServlet {
 		
 		BoardDAO dao = BoardDAO.getInstance();
 		
-		BoardDTO conList = dao.getContentList(no);
 		dao.getCount(no);
+		BoardDTO conList = dao.getContentList(no);
 		
 		PrintWriter out = response.getWriter();
 		

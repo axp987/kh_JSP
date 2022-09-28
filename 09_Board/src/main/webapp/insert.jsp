@@ -25,7 +25,7 @@
 				
 				<tr>
 					<th>내용</th>
-					<td><textarea rows="20" cols="60" name="point"></textarea></td>
+					<td><textarea rows="20" cols="60" name="all"></textarea></td>
 				</tr>
 				
 				<tr>

@@ -12,46 +12,53 @@ import javax.servlet.http.HttpServletResponse;
 import com.board.model.BoardDAO;
 
 /**
- * Servlet implementation class PasswordServlet
+ * Servlet implementation class UpdateOkServlet
  */
-@WebServlet("/password.do")
-public class PasswordServlet extends HttpServlet {
+@WebServlet("/update_ok.do")
+public class UpdateOkServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public PasswordServlet() {
+    public UpdateOkServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 		
-		int no = Integer.parseInt(request.getParameter("num"));
 		
-		String pwd = request.getParameter("pw");  
+		int no = Integer.parseInt(request.getParameter("num"));
+		String pwd = request.getParameter("pw");
+		
+		// 현재 패스워드와 입력한 패스워드 비교
+		
+		
+		String []alls = request.getParameterValues("all");
+		String result = "";
+		for(int i=0; i<alls.length; i++) {
+			Object obj = alls[i];
+			result += (obj + "^");
+		}
+		
 		BoardDAO dao = BoardDAO.getInstance();
-		String check = dao.searchPwd(no);
+		int check = dao.setUpdate(no, result);
 		
 		PrintWriter out = response.getWriter();
-		out.println("<script>");
-		out.println("if(pwd == null) {");
-		out.println("location.href='content.do?num=" + no + "';");
-		out.println("} else {");
-		out.println("if("+ pwd +" ==" + check + ") {");	
-		out.println("location.href='update.do?num2=" + no + "';");
-		out.println("} else {");
-		out.println("alert('패스워드 확인해주세요.');");
-		out.println("location.href='content.do?num=" + no + "';");
-		out.println("}");
-		out.println("}");
-		out.println("</script>");
+		if(check > 0) {
+			out.println("<script>");
+			out.println("alert('수정 완료')");
+			out.println("location.href='content.do?num=" + no + "';");
+			out.println("</script>");
+		} else {
+			out.println("<script>");
+			out.println("alert('수정 실패')");
+			out.println("history.back()");
+			out.println("</script>");
+		}
 	}
 
 }
