@@ -27,7 +27,7 @@
 					<td colspan="2" align="center">
 						<input type="submit" value="삭 제">
 						&nbsp;&nbsp;
-						<input type="reset" value="취 소">
+						<input type="button" value="취 소" onclick="location.href='content.do?num=<%=no %>'">
 					</td>
 				</tr>
 			</table>

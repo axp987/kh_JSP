@@ -17,6 +17,5 @@
 			<input type="button" value="종료" onclick=windows.close()>
 		</form>
 	</div>
-	
 </body>
 </html>

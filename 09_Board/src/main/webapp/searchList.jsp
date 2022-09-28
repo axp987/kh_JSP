@@ -2,7 +2,7 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<% List<BoardDTO> select = (List<BoardDTO>)request.getAttribute("selectList"); %>
+<% List<BoardDTO> search = (List<BoardDTO>)request.getAttribute("Search"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,15 +24,15 @@
 					<th>작성일</th>
 				</tr>
 				<%
-					if(select.size() == 0) {
+					if(search.size() == 0) {
 				%>
 						<tr>
 							<td colspan="5" align="center">조회된 목록이 없습니다.</td>
 						<tr>
 				<%
 					} else {
-						for(int i=0; i<select.size(); i++) {
-							BoardDTO dto = select.get(i);
+						for(int i=0; i<search.size(); i++) {
+							BoardDTO dto = search.get(i);
 				%>
 							<tr onclick="location.href='<%=request.getContextPath()%>/content.do?num=<%=dto.getNo() %>'">
 								<td><%=dto.getNo() %></td>
@@ -55,19 +55,19 @@
 			<hr width="70%" color="red">
 			<br> 
 		</form>
-			<form method="post" action="<%=request.getContextPath() %>/search.do">
-				<!-- <select name="find_field"> -->
-				<select name="find">
-					<%-- String find_field = cont --%>
-					<option value="title">제목</option>
-					<option value="cont">내용</option>
-					<option value="title_cont">제목+내용</option>
-					<option value="writer">작성자</option>
-				</select>
-				<!-- <input type="text" name="find_name"> -->
-				<input type="text" name="find">
-				<input type="submit" value="검색">
-			</form>
+		<form method="post" action="<%=request.getContextPath() %>/search.do">
+			<!-- <select name="find_field"> -->
+			<select name="find">
+				<%-- String find_field = cont --%>
+				<option value="title">제목</option>
+				<option value="cont">내용</option>
+				<option value="title_cont">제목+내용</option>
+				<option value="writer">작성자</option>
+			</select>
+			<!-- <input type="text" name="find_name"> -->
+			<input type="text" name="find">
+			<input type="submit" value="검색">
+		</form>
 	</div>
 </body>
 </html>

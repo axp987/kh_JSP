@@ -360,4 +360,57 @@ public class BoardDAO {
 		}
 		
 	}
+	
+	public List<BoardDTO> searchBoard(String []arr) {
+		//타이틀, 검색어
+		List<BoardDTO> list = new ArrayList<BoardDTO>();
+		
+		openConn();
+		
+		try {
+			if(arr[0].equals("title")) { // 제목 타이틀로 검색한 경우
+				sql = "select * from board where board_title like ? order by board_no desc";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, "%"+arr[1]+"%");
+				
+			} else if(arr[0].equals("cont")) {
+				sql = "select * from board where board_cont like ? order by board_no desc";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, "%"+arr[1]+"%");
+				
+			} else if(arr[0].equals("title_cont")) {
+				sql = "select * from board where board_title like ? OR board_cont like ? order by board_no desc";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, "%"+arr[1]+"%");
+				pstmt.setString(2, "%"+arr[1]+"%");
+		
+			} else {
+				sql = "select * from board where board_writer like ? order by board_no desc";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, "%"+arr[1]+"%");
+			}
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				BoardDTO dto = new BoardDTO();
+				dto.setNo(rs.getInt("board_no"));
+				dto.setWriter(rs.getString("board_writer"));
+				dto.setTitle(rs.getString("board_title"));
+				dto.setCont(rs.getString("board_cont"));
+				dto.setPwd(rs.getString("board_pwd"));
+				dto.setHit(rs.getInt("board_hit"));
+				dto.setDate(rs.getString("board_date"));
+				dto.setUpdate(rs.getString("board_update"));
+				
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		return list;
+	} // searchBoard()
 }
