@@ -204,21 +204,35 @@ public class BoardDAO {
 	}
 	
 	// 수정글 업데이트
-	public int setUpdate(int no, String result) {
+	public int setUpdate(int no, String result, String pwd) {
 		StringTokenizer st = new StringTokenizer(result, "^");
 		openConn();
 		int ch = 0;
+		String pwCheck = ""; 
 		try {
-			sql = "update board set board_writer = ?, board_title = ?, board_cont = ?, board_update = sysdate where board_no = ?";
+			sql = "select board_pwd from board where board_no = ?";
 			pstmt = con.prepareStatement(sql);
-			while(st.hasMoreTokens()) {
-				pstmt.setString(1, st.nextToken()); // 작성자
-				pstmt.setString(2, st.nextToken()); // 작성자
-				pstmt.setString(3, st.nextToken());
+			pstmt.setInt(1, no);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				pwCheck = rs.getString(1);
 			}
-			pstmt.setInt(4, no);
 			
-			ch = pstmt.executeUpdate();
+			if(pwCheck.equals(pwd)) {
+				sql = "update board set board_writer = ?, board_title = ?, board_cont = ?, board_update = sysdate where board_no = ?";
+				pstmt = con.prepareStatement(sql);
+				// 작성자, 제목, 내용 
+				while(st.hasMoreTokens()) {
+					pstmt.setString(1, st.nextToken()); // 작성자
+					pstmt.setString(2, st.nextToken()); // 작성자
+					pstmt.setString(3, st.nextToken());
+				}
+				pstmt.setInt(4, no);
+				
+				ch = pstmt.executeUpdate();
+			} else {
+				return ch;
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -266,4 +280,7 @@ public class BoardDAO {
 		}
 		return check;
 	} // setInsertList()
+	
+	
+	
 }

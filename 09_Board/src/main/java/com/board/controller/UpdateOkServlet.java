@@ -45,9 +45,10 @@ public class UpdateOkServlet extends HttpServlet {
 		}
 		
 		BoardDAO dao = BoardDAO.getInstance();
-		int check = dao.setUpdate(no, result);
+		int check = dao.setUpdate(no, result, pwd);
 		
 		PrintWriter out = response.getWriter();
+		
 		if(check > 0) {
 			out.println("<script>");
 			out.println("alert('수정 완료')");
