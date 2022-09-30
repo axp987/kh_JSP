@@ -1,9 +1,6 @@
-package com.member.controller;
+package com.board1.controller;
 
 import java.io.IOException;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,22 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.catalina.Session;
-
-import com.member.model.dbCon;
-import com.member.model.vari;
+import com.board1.model.BoardDAO;
+import com.board1.model.BoardDTO;
 
 /**
- * Servlet implementation class SelectServlet
+ * Servlet implementation class ContentServlet
  */
-@WebServlet("/select.do")
-public class SelectServlet extends HttpServlet {
+@WebServlet("/content.do")
+public class ContentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SelectServlet() {
+    public ContentServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,17 +31,16 @@ public class SelectServlet extends HttpServlet {
 	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		dbCon db = new dbCon();
+		BoardDAO dao = BoardDAO.getInstance();
 		
+		int no = Integer.parseInt(request.getParameter("num"));
 		
-		List<vari> memberList = db.getMemberList();
+		BoardDTO conList = dao.getContentList(no);
 		
-		request.setAttribute("List", memberList);
-		
-		session.setAttribute("list", memberList);
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/view/member_list.jsp");
+		request.setAttribute("contentList", conList);
+		RequestDispatcher rd = request.getRequestDispatcher("view/content.jsp");
 		rd.forward(request, response);
+		
 	}
 
 }

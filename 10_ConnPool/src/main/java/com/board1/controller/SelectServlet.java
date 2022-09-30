@@ -1,8 +1,6 @@
-package com.member.controller;
+package com.board1.controller;
 
 import java.io.IOException;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -12,10 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.catalina.Session;
-
-import com.member.model.dbCon;
-import com.member.model.vari;
+import com.board1.model.BoardDAO;
+import com.board1.model.BoardDTO;
 
 /**
  * Servlet implementation class SelectServlet
@@ -32,20 +28,13 @@ public class SelectServlet extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		dbCon db = new dbCon();
+		BoardDAO dao = BoardDAO.getInstance();
 		
+		List<BoardDTO> selectList = dao.getBoardList();
 		
-		List<vari> memberList = db.getMemberList();
-		
-		request.setAttribute("List", memberList);
-		
-		session.setAttribute("list", memberList);
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/view/member_list.jsp");
+		request.setAttribute("select", selectList);
+		RequestDispatcher rd = request.getRequestDispatcher("view/Select.jsp");
 		rd.forward(request, response);
 	}
 
