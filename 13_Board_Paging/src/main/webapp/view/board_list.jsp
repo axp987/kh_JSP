@@ -20,7 +20,7 @@
 			<h3>게시물 페이지</h3>
 		<hr width="50%" color="red">
 		<form>
-			<table border="1" cellspacing="1" width="400">
+			<table border="1" cellspacing="0" width="400">
 				<tr>
 					<th>글번호</th>
 					<th>글제목</th>
@@ -32,7 +32,7 @@
 				<c:set var="list" value="${allArr[9] }" />
 				<c:if test="${!empty list }">
 					<c:forEach items="${list }" var="dto">
-						<tr onclick="location.href='<%=request.getContextPath() %>/content.do?num=${dto.getNo() }&page=${page }'">
+						<tr onclick="location.href='<%=request.getContextPath() %>/board_content.do?num=${dto.getNo() }&page=${Page }'">
 							<td>${dto.getNo() }</td>
 							<td>${dto.getTitle() }</td>
 							<td>${dto.getHit() }</td>
@@ -49,7 +49,7 @@
 				</c:if>
 				<tr>
 					<td colspan="4" align="center">
-						<input type="button" value="글쓰기" onclick="location.href='board_write.do'">
+						<input type="button" value="글쓰기" onclick="location.href='view/board_write.jsp'">
 					</td>
 				</tr>
 			</table>
@@ -59,10 +59,10 @@
 				endNo, startBlock, endBlock, pageList --%>
 			<nav align="center">
 			  <ul class="pagination">
-			  
 			    <li class="page-item">
 			      <a class="page-link" href="board_list.do?page=1">First</a>
 			    </li>
+			    
 			    <li class="page-item">
 			    <c:if test="${page == 1 }">
 			      <a class="page-link" href="board_list.do?page=1">Previous</a>			    
@@ -86,6 +86,7 @@
 						</li>
 					</c:if> 
 				</c:forEach>
+				
 				<li class="page-item">
 					<a class="page-link" href="board_list.do?page=${page + 1 }">Next</a>
 				</li> 

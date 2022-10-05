@@ -70,7 +70,7 @@ public class BoardListAction implements Action {
 		// view page로 이동시키자
 		Object []arr = { page, rowsize, block, totalRecord, allPage, startNo, 
 				endNo, startBlock, endBlock, pageList };
-		request.setAttribute("page", page);
+		request.setAttribute("Page", page);
 		request.setAttribute("rowsize", rowsize);
 		request.setAttribute("block", block);
 		request.setAttribute("totalRecord", totalRecord);

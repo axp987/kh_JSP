@@ -173,5 +173,57 @@ public class BoardDAO {
 			closeConn(rs, pstmt, con);
 		}
 		return result;
+	} // setBoardList 게시글 추가 
+	
+	// board 테이블의 게시물 번호에 해당하는 게시글의
+	// 조회수를 증가시키는 메소드
+	public void getBoardHit(int no) {
+		openConn();
+		
+		try {
+			sql = "update board set board_hit = board_hit+1 where board_no = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(pstmt, con);
+		}
+	} // getBoardHit(int no) 메소드 end
+	
+	// board 테이블에서 게시글 번호에 해당하는 게시글을 조회하는 메소드
+	public BoardDTO getBoardCont(int no) {
+		BoardDTO dto = null;
+		
+		openConn();
+		
+		try {
+			sql = "select * from board where board_no = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {	
+				dto = new BoardDTO();
+				dto.setNo(rs.getInt("board_no"));
+				dto.setWriter(rs.getString("board_writer"));
+				dto.setTitle(rs.getString("board_title"));
+				dto.setCont(rs.getString("board_cont"));
+				dto.setPwd(rs.getString("board_pwd"));
+				dto.setHit(rs.getInt("board_hit"));
+				dto.setDate(rs.getString("board_date"));
+				dto.setUpdate(rs.getString("board_update"));
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		return dto;
 	}
 }

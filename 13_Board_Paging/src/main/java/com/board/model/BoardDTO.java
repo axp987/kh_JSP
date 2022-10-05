@@ -70,4 +70,21 @@ public class BoardDTO {
 	public void setUpdate(String update) {
 		this.update = update;
 	}
+	
+	private Object []a = { no, writer, title, cont, pwd, hit, date, update };
+	private Object []arr = { getNo(), getWriter(), getTitle(), getCont(), getPwd(), getHit(), getDate(), getUpdate()};
+
+
+	public Object[] getA() {
+		return a;
+	}
+	public void setA(Object[] a) {
+		this.a = a;
+	}
+	public Object[] getArr() {
+		return arr;
+	}
+	public void setArr(Object[] arr) {
+		this.arr = arr;
+	}
 }
