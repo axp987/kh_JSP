@@ -45,8 +45,8 @@ public class SelectServlet extends HttpServlet {
 		
 		session.setAttribute("list", memberList);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/view/member_list.jsp");
-		rd.forward(request, response);
+//		RequestDispatcher rd = request.getRequestDispatcher("/view/member_list.jsp");
+//		rd.forward(request, response);
 	}
 
 }

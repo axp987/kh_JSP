@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	session.setAttribute("id", mem_id);
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +13,7 @@
 <body>
 	<div align="center">
 		<hr width="50%" color="blue">
-			<h3>MEMBER10 테이블 회원 등록 폼 페이지</h3>
+			<h3>MEMBER10 테이블 회원 등록 폼 페이지</h3> 
 		<hr width="50%" color="blue">
 		<form method="post" action="<%=request.getContextPath()%>/insert.do">
 			<table border="1" cellspacing="0" width="350">
