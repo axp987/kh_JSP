@@ -81,7 +81,7 @@
 						<input type="button" value="회원수정" onclick="location.href='modify.do?num=${content.getNum()}'">
 						&nbsp;&nbsp;&nbsp;
 						<input type="button" value="회원삭제" onclick="if(confirm('회원을 삭제하시겠습니까?')) {
-																		location.href='delete.do?num=${content.getNum()}'
+																		location.href='delete.do?num=${content.getNum()}' }
 																		else { return; }">
 						&nbsp;&nbsp;&nbsp;
 						<input type="button" value="처음으로" onclick="location.href='<%=request.getContextPath()%>/select.do'">

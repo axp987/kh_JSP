@@ -1,6 +1,7 @@
-package com.member.controller;
+package com.board.controller;
 
 import java.io.IOException;
+
 import java.io.UnsupportedEncodingException;
 
 import javax.servlet.RequestDispatcher;
@@ -9,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.member.action.*;
+import com.board.action.*;
 
 public class FrontController extends HttpServlet{
 	private static final long serialVersionUID = 1L;
@@ -32,33 +33,20 @@ public class FrontController extends HttpServlet{
 		String command = uri.substring(path.length()+1);
 		System.out.println("Command >>>" + command);
 		
+		String viewPage = null;
 		Action action = null;
-		//MemberListAction mem = null;
-		if(command.equals("select.do")) {
-			action = new MemberListAction();
-			//mem = new MemberListAction();
-		} else if(command.equals("insert.do")) {
-			action = new MemberJoinAction();
-		} else if(command.equals("insert_ok.do")) {
-			action = new MemberJoinOkAction();
-		} else if(command.equals("content.do")) {
-			action = new MemberContent();
-		} else if(command.equals("modify.do")) {
-			action = new MemberModifyAction();
-		} else if(command.equals("modify_ok.do")) {
-			action = new MemeberModifyOkAction();
-		} else if(command.equals("delete.do")) {
-			action = new MemberDeleteAction();
-		} else if(command.equals("delete_ok.do")) {
-			action = new MemberDeleteOkAction();
+		if(command.equals("board_list.do")) {
+			action = new BoardListAction();
+			action.execute(request, response);
+			viewPage = "view/board_list.jsp";
+		} else if(command.equals("board_write.do")) {
+			viewPage = "view/board_write.jsp";
+		} else if(command.equals("board_write_Ok.do")) {
+			action = new BoardWriteOkAction();
+			action.execute(request, response);
 		}
 		
-		// MemberListAction 에서 모든 메소드를 호출하면 안되나?
-		// path1에 해당 *.do에 해당하는 서블릿이 들어감
-		String path1 = action.execute(request, response);
-		
-		//String path1 = mem.execute(request, response);
-		RequestDispatcher rd = request.getRequestDispatcher(path1);
+		RequestDispatcher rd = request.getRequestDispatcher(viewPage);
 		rd.forward(request, response);
 	}
 }

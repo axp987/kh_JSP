@@ -202,4 +202,39 @@ public class MemberDAO {
 		}
 		return reuslt;
 	} // updateMember() 메소드 end
+	
+	public int deleteMember(MemberDTO dto) {
+		int check = 0;
+		openConn();
+		
+		try {
+			sql = "delete from member10 where (select num from member10 where ? = (select pwd from member10 where num = ?))";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, dto.getPwd());
+			pstmt.setInt(2, dto.getNum());
+			check = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(pstmt, con);
+		}
+		return check;
+	} //deleteMember
+	
+	public void deleteUpdate(MemberDTO dto) {
+		openConn();
+		try {
+			sql = "update member10 set num = num - 1 where num > ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, dto.getNum());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(pstmt, con);
+		}
+	}
 }
