@@ -120,6 +120,13 @@ int endNo = (page * rowsize); // 해당 페이지에서 끝 번호
 int startBlock =  (((page-1) / block) * block) + 1; // 해당 페이지에서 시작 블럭
 int endBlock =  (((page-1) / block) * block) + block; // 해당 페이지에서 끝 블럭
 
+시작페이지(startPage) = 1
+>> (현재페이지 * rowsize) - (2)
+마지막페이지(lastPage) = (게시물 * 3) + 1
+c:forEach begin="1"
+
+
+
 if(request.getParameter("page") != null) {
 	page = Integer.parseInt(request.getParameter("page").trim());
 } else {
@@ -142,3 +149,10 @@ private int no;
 	private int hit;
 	private String date;
 	private String update;
+
+해당 list 페이지로 넘어가기
+"location.href='board_content.do?no=" + dto.getNo() + "&page=" + nowPage + "'"
+
+
+sql = "select * from (select row_number() over(order by board_no desc) rnum, b.* from board b where board_title like '%key%')  where rnum >= (startNum) and rnum <= (endNum);
+
