@@ -42,10 +42,29 @@ public class FrontController extends HttpServlet{
 		} else if(command.equals("board_write_Ok.do")) {
 			action = new BoardWriteOkAction();
 			action.execute(request, response);
+			
 		} else if(command.equals("board_content.do")) {
+			String checking = request.getParameter("check");
 			action = new BoardContentAction();
+			if(checking.equals("conTent")) {
+				action.execute(request, response);			
+				viewPage = "view/board_content.jsp";
+			} else if(checking.equals("upDate")) {
+				action.execute(request, response);
+				viewPage = "view/board_update.jsp"; // param을 사용해서 변경예정
+			} else if(checking.equals("upDateOk")) {
+				action.execute(request, response);
+			} 
+			
+		} else if(command.equals("board_delete.do")) {
+			action = new BoardDeleteAction();
 			action.execute(request, response);
-			viewPage = "view/board_content.jsp";
+		} else if(command.equals("board_form_delete.do")) {
+			viewPage = "view/board_form_delete.jsp";
+		} else if(command.equals("board_search.do")) {
+			action = new BoardSearchAction();
+			action.execute(request, response);
+			viewPage = "view/board_search.jsp";
 		}
 		
 		RequestDispatcher rd = request.getRequestDispatcher(viewPage);

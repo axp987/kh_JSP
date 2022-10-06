@@ -32,7 +32,7 @@
 				<c:set var="list" value="${List }" />
 				<c:if test="${!empty list }">
 					<c:forEach items="${list }" var="dto">
-						<tr onclick="location.href='<%=request.getContextPath() %>/board_content.do?num=${dto.getNo() }&page=${Page }&check=conTent'">
+						<tr>
 							<td>${dto.getNo() }</td>
 							<td>${dto.getTitle() }</td>
 							<td>${dto.getHit() }</td>
@@ -43,90 +43,55 @@
 				<c:if test="${empty list }">
 					<tr>
 						<td colspan="4" align="center">
-							<h3>조회된 목록이 없습니다.</h3>
+							<h3>검색된 목록이 없습니다.</h3>
 						</td>
 					</tr>
 				</c:if>
-				<tr>
-					<td colspan="4" align="center">
-						<input type="button" value="글쓰기" onclick="location.href='view/board_write.jsp'">
-					</td>
-				</tr>
 			</table>
 			<br>
-			<%-- 페이징 처리 영역 --%>
+			<%-- 검색 페이징 처리 영역 --%>
 			<%-- allArr = page, rowsize, block, totalRecord, allPage, 5=startNo, 
 				endNo, startBlock, endBlock, pageList --%>
 			<nav align="center">
 			  <ul class="pagination">
 			    <li class="page-item">
-			      <a class="page-link" href="board_list.do?page=1">First</a>
+			      <a class="page-link" href="board_search.do?page=1&search_field=${field }&search_keyword=${keyword }">First</a>
 			    </li>
 			    
 			    <li class="page-item">
-			    <c:if test="${page == 1 }">
-			      <a class="page-link" href="board_list.do?page=1">Previous</a>			    
-			    </c:if>
-			    <c:if test="${page != 1 }">
-			    	<a class="page-link" href="board_list.do?page=${Page - 1 }">Previous</a>
-			    	<%-- ${startNo - 1 } --%>
-			    </c:if>
+				    <c:if test="${page == 1 }">
+				      <a class="page-link" href="board_search.do?page=1&search_field=${field }&search_keyword=${keyword }">Previous</a>			    
+				    </c:if>
+				    <c:if test="${page != 1 }">
+				    	<a class="page-link" href="board_search.do?page=${Page - 1 }&search_field=${field }&search_keyword=${keyword }">Previous</a>
+				    </c:if>
 			    </li>
 			   
 			    <c:forEach begin="${startBlock }" end="${endBlock }" var="i">
 					<c:if test="${i==page }">
 						<li class="page-item active" aria-current="page">
-							<a class="page-link" href="board_list.do?page=${i }">${i }</a>
+							<a class="page-link" href="board_search.do?page=${i }&search_field=${field }&search_keyword=${keyword }">${i }</a>
 						</li>
 					</c:if>
 					
 					<c:if test="${i!=page }">
 						<li class="page-item">
-							<a class="page-link" href="board_list.do?page=${i }">${i }</a>
+							<a class="page-link" href="board_search.do?page=${i }&search_field=${field }&search_keyword=${keyword }">${i }</a>
 						</li>
 					</c:if> 
 				</c:forEach>
 				
 				<li class="page-item">
-					<a class="page-link" href="board_list.do?page=${Page + 1 }">Next</a>
+					<a class="page-link" href="board_search.do?page=${Page + 1 }&search_field=${field }&search_keyword=${keyword }">Next</a>
 				</li> 
 				<li class="page-item">
-					<a class="page-link" href="board_list.do?page=${allPage }">End</a>
+					<a class="page-link" href="board_search.do?page=${allPage }&search_field=${field }&search_keyword=${keyword }">End</a>
 				</li>
 			  </ul>
 			</nav>
-			
-			<%-- <c:if test="${page > block }">
-				<a href="board_list.do?page=1">◀◀</a>
-				<a href="board_list.do?page=${startNo - 1 }">◀</a>
-			</c:if>
-			<c:forEach begin="${startBlock }" end="${endBlock }" var="i">
-				<c:if test="${i==page }">
-					<b><a href="board_list.do?page=${i }">[${i }]</a></b>
-				</c:if>
-				
-				<c:if test="${i!=page }">
-					<a href="board_list.do?page=${i }">[${i }]</a>
-				</c:if> 
-			</c:forEach>
-			
-			<c:if test="${endBlock < allPage }">
-				<a href="board_list.do?page=${endBlock +1 }">▶▶</a>
-				<a href="board_list.do?page=${allPage }">▶</a>
-			</c:if> --%>
 		</form>
-		<hr width="50%" color="green">
-		<form method="post" action="<%=request.getContextPath() %>/board_search.do">
-			<select name="search_field">
-				<option value="title">제목</option>
-				<option value="cont">내용</option>
-				<option value="writer">작성자</option>
-				<option value="title_cont">제목+내용</option>
-			</select>
-			<input type="text" name="search_keyword">
-			&nbsp;&nbsp;
-			<input type="submit" value="검색"> 
-		</form>
+		
+		
 	</div>
 </body>
 </html>
