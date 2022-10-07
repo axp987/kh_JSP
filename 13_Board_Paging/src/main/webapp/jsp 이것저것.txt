@@ -156,3 +156,21 @@ private int no;
 
 sql = "select * from (select row_number() over(order by board_no desc) rnum, b.* from board b where board_title like '%key%')  where rnum >= (startNum) and rnum <= (endNum);
 
+sql = "select * from (select row_number() over(order by board_no desc) rnum, b.* from board b) where rnum >= ? and rnum <= ?";
+
+
+
+try {
+	Class<?> url = Class.forName(url_2);
+	// 첫번째 방법 (deptracted - 더 이상 사용되지 않는)
+	//action = (Action)url.newInstance();
+	// getContructor() 메서드는 파라미터가 없는 기본생성자를 가져오는 메서드
+	Constructor<?> constructor = url.getConstructor(); // 매개변수타입을 넣어줘야하는데 빈칸으로 주면 Constructor 객체 타입으로 반환됨
+	action = (Action)constructor.newInstance();
+	//url.getConstructor() 기본 생성자를 가져와서 Constructor객체 타입으로 받은 다음 newInstance()로 가져와서 action에 넣어줌
+	
+	action.execute(request, response); // 비지니스 로직 호출
+					
+} catch (Exception e) {
+	e.printStackTrace();
+}
