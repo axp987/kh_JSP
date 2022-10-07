@@ -34,10 +34,9 @@ public class BbsModifyOkAction implements Action {
 			forward.setRedirect(true);
 			forward.setPath("bbs_content.do?num=" + dto.getNo());
 			
-		} else if (res == -1) {
-			System.out.println("여기로");
+		} else {
 			out.println("<script>"
-					+ "alert('수정 실패')"
+					+ "alert('게시물 답변 등록 실패');"
 					+ "history.back();"
 					+ "</script>");
 		}

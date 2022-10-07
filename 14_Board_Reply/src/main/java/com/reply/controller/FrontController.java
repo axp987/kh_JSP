@@ -112,8 +112,6 @@ public class FrontController extends HttpServlet {
 				RequestDispatcher rd = request.getRequestDispatcher(forward.getPath());
 				rd.forward(request, response);
 			}
-		} else {
-			
-		}
+		} 
 	} // service 
 }
