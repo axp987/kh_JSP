@@ -26,10 +26,18 @@
 			<c:set var="list" value="${List }" />
 			<c:if test="${!empty list }">
 				<c:forEach items="${list }" var="dto">
-					<tr>
+					<tr onclick="location.href='<%=request.getContextPath() %>/bbs_content.do?num=${dto.getNo() }'">
 						<td>${dto.getNo() }</td>
 						<td>${dto.getWriter() }</td>
-						<td>${dto.getTitle() }</td>
+						<td>
+							<%-- 댓글인 경우 --%>
+							<c:if test="${dto.getIndent() != 0 }">
+								<c:forEach begin="1" end="${dto.getIndent() }">
+									☞
+								</c:forEach>
+							</c:if>
+							${dto.getTitle() }
+						</td>
 						<td>${dto.getHit() }</td>
 						<td>${dto.getDate().substring(0, 10) }</td>
 						<td>${dto.getGroup() }</td>

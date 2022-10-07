@@ -174,3 +174,23 @@ try {
 } catch (Exception e) {
 	e.printStackTrace();
 }
+
+
+총게시물 갯수 = count;
+
+(rowsize)한 페이지에 게시물 표시 갯수 = 3;
+
+현재 페이지번호 = page;
+
+//시작
+startNo = (page * rowsize) - (rowsize - 1);
+//끝
+endNo = (page * rowsize)
+
+block = 갯수
+
+http://localhost:8787/14_Board_Reply/bbs_modify_ok.do // false
+http://localhost:8787/14_Board_Reply/bbs_content.do?num=6 // true
+
+리다이렉트는 DB 변화시
+포워드는 URI이 외부에 공개되면 안될 때

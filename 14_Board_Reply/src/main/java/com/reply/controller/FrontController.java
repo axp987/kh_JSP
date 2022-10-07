@@ -2,6 +2,7 @@ package com.reply.controller;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Constructor;
 import java.util.Properties;
@@ -112,7 +113,7 @@ public class FrontController extends HttpServlet {
 				rd.forward(request, response);
 			}
 		} else {
-			System.out.println("forward가 문제가 있어요");
+			
 		}
 	} // service 
 }
