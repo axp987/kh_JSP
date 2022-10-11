@@ -1,0 +1,198 @@
+com.member.action
+
+com.member.model
+
+
+
+uri= /12_Member_MVC2/select.do
+path = /12_Member_MVC2
+command = select.do
+
+
+# 아파치 톰캣 > context.xml
+ <!-- 커넥션 풀 환경 설정 -->
+    <Resource
+    	name = "jdbc/myoracle"
+    	auth = "Container"
+    	type="javax.sql.DataSource"
+    	url="jdbc:oracle:thin:@localhost:1521:XE"
+    	driverClassName="oracle.jdbc.driver.OracleDriver"
+    	username="web"
+    	password="1234"
+    	maxActive="200"
+    	maxIdle = "100"
+    />
+
+<!-- 서블릿 매핑(N:1) --> 다이다믹 프로젝트 >> web.xml
+  <servlet>
+  	<servlet-name>FrontController</servlet-name>
+  	<servlet-class>com.member.controller.FrontController</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>FrontController</servlet-name>
+  	<url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+
+
+그럼 작업을 할때는
+추상클래스를 하나 던져주고 거기에 맞춰서 작업을 하는건가?
+그러면 DAO를 사용하지 않고
+추상클래스 내에서 execute 주고
+servlet >> Action >> List클래스 >> DAO >> 웹
+
+
+
+private int num;
+	private String memid;
+	private String memname;
+	private String pwd;
+	private int age;
+	private int mileage;
+	private String job;
+	private String addr;
+	private String date;
+
+
+JoinOk 랑 ModifyOk랑 합치려면 어디서 왔는지 알면될듯?
+그럼 <input type="hidden"으로 String 값으로 비교하면 한다음에 패스워드 비교하면 되긴함
+근데 query문에서 count+1 을 해주니까 이것도 생각해야겠네
+근데 만약에 내가 리더면 코드가 꼬일수도 있으니까 이렇게 안하는게 좋을까? >> 직장이라면 어떻게 할까?
+
+넘버 입력비밀번호 아이디 이름 비밀번호 나이 마일리지 직업 주소
+
+
+
+나중에 협업을 하게 되면
+쿼리문을 한곳에 다 모아서 사용하게 된다....
+
+INSERT INTO table_A SELECT *, 'ID' as ID, now() as MOD_DT FROM table_B WHERE ID = 'ID'
+
+
+
+
+		// 한 페이지당 보여질 게시물의 수
+		int rowsize = 3;
+		// 아래에 보여질 페이지의 최대 블럭 수 - 예) [1][2][3] / [4][5][6] / [7][8][9]
+		int block = 3;
+		// DB 상의 게시물의 전체 수
+		int totalRecord = 0;
+		
+		// 전체 페이지 수 - 전체 게시물 의 수 / 한 페이지 당 보여질 게시물의 수
+		int allPage = 0;
+		
+		//현재 페이지 변수
+		int page = 0;
+		
+		if(request.getParameter("page") != null) {
+			page = Integer.parseInt(request.getParameter("page").trim());
+		} else {
+			// 처음으로 "전체 게시물 목록" a 태그를 클릭한 경우
+			page = 1;
+		}
+		
+		BoardDAO dao = BoardDAO.getInstance();
+		dao.getBoardCount();
+		
+		 // 해당 페이지에서 시작번호
+		int startNo = (page * rowsize) - (rowsize - 1);
+		
+		// 해당 페이지에서 끝 번호
+		int enoNo = (page * rowsize);
+		
+		// 해당 페이지에서 시작 블럭
+		int startBlock =  (((page-1) / block) * block) + 1;
+		
+		
+		// 해당 페이지에서 끝 블럭
+		int endBlock =  (((page-1) / block) * block) + block;
+
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+int rowsize = 3; // 한 페이지당 보여질 게시물의 수
+int block = 3; // 아래에 보여질 페이지의 최대 블럭 수 - 예) [1][2][3] / [4][5][6] / [7][8][9]
+int totalRecord = 0; // DB 상의 게시물의 전체 수
+int allPage = 0; // 전체 페이지 수 - 전체 게시물 의 수 / 한 페이지 당 보여질 게시물의 수
+int page = 0; //현재 페이지 변수
+int startNo = (page * rowsize) - (rowsize - 1); // 해당 페이지에서 시작번호
+int endNo = (page * rowsize); // 해당 페이지에서 끝 번호
+int startBlock =  (((page-1) / block) * block) + 1; // 해당 페이지에서 시작 블럭
+int endBlock =  (((page-1) / block) * block) + block; // 해당 페이지에서 끝 블럭
+
+시작페이지(startPage) = 1
+>> (현재페이지 * rowsize) - (2)
+마지막페이지(lastPage) = (게시물 * 3) + 1
+c:forEach begin="1"
+
+
+
+if(request.getParameter("page") != null) {
+	page = Integer.parseInt(request.getParameter("page").trim());
+} else {
+	// 처음으로 "전체 게시물 목록" a 태그를 클릭한 경우
+	page = 1;
+}
+
+
+row_number() : : 출력된 데이터에 순번을 매겨줌
+select row_number() over(order by board_no desc) rnum, b.* from board b;
+
+select * from (select row_number() over(order by board_no desc) rnum,
+ b.* from board b) where rnum >= 1 and rnum <= 3;
+
+private int no;
+	private String writer;
+	private String title;
+	private String cont;
+	private String pwd;
+	private int hit;
+	private String date;
+	private String update;
+
+해당 list 페이지로 넘어가기
+"location.href='board_content.do?no=" + dto.getNo() + "&page=" + nowPage + "'"
+
+
+sql = "select * from (select row_number() over(order by board_no desc) rnum, b.* from board b where board_title like '%key%')  where rnum >= (startNum) and rnum <= (endNum);
+
+sql = "select * from (select row_number() over(order by board_no desc) rnum, b.* from board b) where rnum >= ? and rnum <= ?";
+
+
+
+try {
+	Class<?> url = Class.forName(url_2);
+	// 첫번째 방법 (deptracted - 더 이상 사용되지 않는)
+	//action = (Action)url.newInstance();
+	// getContructor() 메서드는 파라미터가 없는 기본생성자를 가져오는 메서드
+	Constructor<?> constructor = url.getConstructor(); // 매개변수타입을 넣어줘야하는데 빈칸으로 주면 Constructor 객체 타입으로 반환됨
+	action = (Action)constructor.newInstance();
+	//url.getConstructor() 기본 생성자를 가져와서 Constructor객체 타입으로 받은 다음 newInstance()로 가져와서 action에 넣어줌
+	
+	action.execute(request, response); // 비지니스 로직 호출
+					
+} catch (Exception e) {
+	e.printStackTrace();
+}
+
+
+총게시물 갯수 = count;
+
+(rowsize)한 페이지에 게시물 표시 갯수 = 3;
+
+현재 페이지번호 = page;
+
+//시작
+startNo = (page * rowsize) - (rowsize - 1);
+//끝
+endNo = (page * rowsize)
+
+block = 갯수
+
+http://localhost:8787/14_Board_Reply/bbs_modify_ok.do // false
+http://localhost:8787/14_Board_Reply/bbs_content.do?num=6 // true
+
+리다이렉트는 DB 변화시
+포워드는 URI이 외부에 공개되면 안될 때
+
+http://servlets.com/ >> COS File Upload Library >> cos-22.05.zip >> lib >> cos 라이브러리

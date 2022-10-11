@@ -87,7 +87,7 @@
 					<td colspan="2" align="center">
 						<input type="button" value="수정" onclick="location.href='<%=request.getContextPath() %>/bbs_modify.do?num=${list.getNo() }'">
 						&nbsp;&nbsp;&nbsp;
-						<input type="button" value="삭제" onclick="if(confirm('정말로 삭제할껀가요?') { 
+						<input type="button" value="삭제" onclick="if(confirm('정말로 삭제할껀가요?')) { 
 																		location.href='<%=request.getContextPath() %>/bbs_delete.do?num=${list.getNo() }'
 																	} else { return }">
 						&nbsp;&nbsp;&nbsp;

@@ -286,4 +286,47 @@ public class BbsDAO {
 		return result;
 		
 	} // replyBbs()
+	
+	public int deleteBbs(int no, String pwd) {
+		int result = 0;
+		openConn();
+		
+		try {
+			sql = "select * from jsp_bbs where board_no = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				if(pwd.equals(rs.getString("board_pwd"))) {
+					if(rs.getInt("board_step") == 0) {
+						sql = "update jsp_bbs set board_title = ? where board_no = ?";
+						pstmt = con.prepareStatement(sql);
+						pstmt.setString(1, "(원글) 삭제된 게시글 입니다.");
+						pstmt.setInt(2, no);
+						result = pstmt.executeUpdate();
+					} else if(rs.getInt("board_step") != 0){
+						sql = "delete from jsp_bbs where board_no = ?";
+						pstmt = con.prepareStatement(sql);
+						pstmt.setInt(1, no);
+						pstmt.executeUpdate();
+						
+						sql = "update jsp_bbs set board_no = board_no - 1 where board_no > ?";
+						pstmt = con.prepareStatement(sql);
+						pstmt.setInt(1, no);
+						pstmt.executeUpdate();
+						
+						result = -2;
+					}
+				} else {
+					result = -1;
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		return result;
+	} // deleteBbs()
 }

@@ -1,6 +1,7 @@
-package com.reply.controller;
+package com.upload.controller;
 
 import java.io.FileInputStream;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -14,8 +15,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.reply.action.Action;
-import com.reply.action.ActionForward;
+import com.upload.action.Action;
+import com.upload.action.ActionForward;
 
 public class FrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -44,7 +45,7 @@ public class FrontController extends HttpServlet {
 		Properties pro = new Properties();
 		
 		// mapping.properties File 선택
-		FileInputStream fis = new FileInputStream("C:\\NCS\\git\\kh_JSP\\14_Board_Reply\\src\\main\\java\\com\\reply\\controller\\mapping.properties");
+		FileInputStream fis = new FileInputStream("C:\\NCS\\git\\kh_JSP\\15_Board_FileUpload\\src\\main\\java\\com\\upload\\controller\\mapping.properties");
 		// .properties 파일을 읽어드림
 		pro.load(fis);
 		// bbs_list.do와 같은 property 값을 읽어드림
@@ -88,12 +89,9 @@ public class FrontController extends HttpServlet {
 					
 					//ActionForward forward = null;
 					// call by reference 개념
-					System.out.println("forward1: " + forward);
-					System.out.println("Action1: " + action);
 					forward = action.execute(request, response); // 비지니스 로직 호출
 					// null 값인데 public ActionForward execute < BbsListAction 참조
-					System.out.println("forward2: " + forward);
-					System.out.println("Action2: " + action);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
