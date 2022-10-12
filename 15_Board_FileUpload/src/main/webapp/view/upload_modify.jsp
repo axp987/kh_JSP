@@ -18,7 +18,7 @@
 			이 방식은 <form> 요소가 파일이나 이미지를 서버로 전송할 때 주로 사용함
 		--%>
 		<c:set var="dto" value="${modify }" />
-		<form method="post" enctype="multipart/form-data" action="location.href='upload_modify_ok.do'">
+		<form method="post" enctype="multipart/form-data" action="upload_modify_ok.do">
 			<input type="hidden" name="all" value="${dto.getNo() }">
 			<table border="1" cellspacing="0" width="600">
 			<c:if test="${!empty dto }" >
@@ -29,14 +29,16 @@
 				
 				<tr>
 					<th>작성자</th>
-					<td>${dto.getWriter() }</td>
+					<td><input type="text" name="all" value="${dto.getWriter() }" readonly></td>
 				</tr>
 				
 				<tr>
 					<th>파일첨부</th>
 					<c:if test="${!empty dto.getFile() }" >
 						<td>
-							<input type="file" name="upload_file" value="${dto.getFile() }">
+							<input type="file" name="upload_file" id="fileUpload" style="display:none;"></input>
+							<label for="fileUpload" style="background-color: gray">파일 선택</label>
+							<input type="text" value="${dto.getFile() }" style="border: none;" readonly>
 						</td>					
 					</c:if>
 					<c:if test="${empty dto.getFile() }" >
@@ -58,9 +60,7 @@
 				<tr>
 					<th>패스워드</th>
 					<td>
-						<c:forEach begin="1" end="${dto.getPwd().length() }">
-							*
-						</c:forEach>
+						<input type="password" name="all">
 					</td>
 				</tr>
 				<tr>

@@ -87,7 +87,7 @@
 					<input type="button" value="글수정" onclick="location.href='upload_modify.do?num=${dto.getNo()}'">
 					&nbsp;&nbsp;&nbsp;
 					<input type="button" value="글삭제" onclick="if(confirm('정말로 삭제할꺼야?')) {
-															location.href='upload_delete.do?num=${dto.getNo()}'}
+															location.href='upload_delete.do?num=${dto.getNo()}'
 															} else { return }">
 					&nbsp;&nbsp;&nbsp;
 					<input type="button" value="전체목록" onclick="location.href='upload_list.do'">

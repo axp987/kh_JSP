@@ -196,3 +196,4 @@ http://localhost:8787/14_Board_Reply/bbs_content.do?num=6 // true
 포워드는 URI이 외부에 공개되면 안될 때
 
 http://servlets.com/ >> COS File Upload Library >> cos-22.05.zip >> lib >> cos 라이브러리
+accept=".jpg, .jpeg, .png" />
