@@ -196,4 +196,7 @@ http://localhost:8787/14_Board_Reply/bbs_content.do?num=6 // true
 포워드는 URI이 외부에 공개되면 안될 때
 
 http://servlets.com/ >> COS File Upload Library >> cos-22.05.zip >> lib >> cos 라이브러리
-accept=".jpg, .jpeg, .png" />
+
+웹과 안드로이드에서 데이터를 주고 받을때는 JSON을 많이 사용 ==> xml은 정해진 구조 이지만 json은 자바의 객체 배열를 사용하기 때문이다.
+
+javase-17

@@ -1,0 +1,28 @@
+능력단위: UI 구현
+문제해결 시나리오(2문제)
+1문제 - 40점
+2문제 - 60점
+
+서술형: 5문제(상 - 2문제 / 중 - 2문제 / 하 - 1문제)
+
+
+UI 구현 책 >> 3page
+* UI 디자인 가이드 확인
+* 웹 표준이란?
+* JSP란?
+* HTML5 란?
+* CSS를 이용한 색상 표현방법 - 3가지
+* CSS 애니메이션 속성 transition-duration 속성 확인
+* CSS 선택자란 무엇인지?
+* HTML5 시맨틱 태그는 무엇인지?
+* HTML5 문서 상단 DOCTYPE이란?
+* HTML
+
+ 요소 중 display 속성에 block level 요소와
+	inline level 요소 설명
+* 자바스크립트로 HTML 요소 접근 시 (document.getElementById)
+	id # , class . , tag, name으로 접근하는 방법 코드 작성
+* 정규표현식?
+* 자바스크립트란?
+
+get , post방식 유무

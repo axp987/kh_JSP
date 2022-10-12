@@ -26,6 +26,7 @@
     <!--
     <Manager pathname="" />
     -->
+    <!-- 커넥션 풀 환경 설정 -->
     <Resource
     	name = "jdbc/myoracle"
     	auth = "Container"
