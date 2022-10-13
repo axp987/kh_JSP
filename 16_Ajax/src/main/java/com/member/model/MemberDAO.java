@@ -131,5 +131,60 @@ public class MemberDAO {
 			closeConn(rs, pstmt, con);
 		}
 		return result;
-	}
+	} // getCustomerList
+	
+	// 입력폼 창에서 넘어온 아이디가 중복인지 여부를
+	// 확인하는 메서드
+	public String idCheck(String id) {
+		String result = "사용 가능합니다.";
+		openConn();
+		
+		try {
+			sql = "select * from customer where id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = "중복된 아이디입니다.";
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		return result;
+	} // idCheck()
+	
+	public int insertCustomer(MemberDTO dto) {
+		int result = 0, count = 0;
+		
+		openConn();
+		
+		try {
+			sql = "select max(no) from customer";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1) + 1;
+			}
+			
+			sql = "insert into customer values (?, ?, ?, ?, ?, ?)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, count);
+			pstmt.setString(2, dto.getId());
+			pstmt.setString(3, dto.getName());
+			pstmt.setInt(4, dto.getAge());
+			pstmt.setString(5, dto.getPhone());
+			pstmt.setString(6, dto.getAddr());
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		return result;
+	} // insertCustomer
 }

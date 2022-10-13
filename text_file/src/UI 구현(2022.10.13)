@@ -8,21 +8,84 @@
 
 UI 구현 책 >> 3page
 * UI 디자인 가이드 확인
-* 웹 표준이란?
+	- 정의: 디자이너가 개발자에게 디자인 리소스를 제공하는 문서이다.
+	- 구성 요소: 사전에 레이아웃을 설계하여 반복적으로 활용을 많이 한다.
+		- 일반사항
+		- 문서이력
+		- 주요 디자인 요소
+			- 화면 설정
+			- 공통 규칙
+			- 구성 항목
+			- 레이아웃
+			- 네이밍
+* 웹 표준이란? 
+	- www을 서술하고, 정의하는 공식 표준이나 기술 규격을 가리키는 일반적인 용어
+	- 웹 페이지 제작 도구와 기술에 대한 규격
+	
 * JSP란?
+	- 서블릿과 자바코드를 함께 사용하면서 HTML에 전송하여 화면을 구현하는것
+	- 웹 프로그래밍이 점점 복잡해지면서 서블릿과 비지니스 로직을 분리하여 더욱 편하게 재사용, 유지관리를 함
+	
 * HTML5 란?
+	- 게시판이나 블로그를 좀 더 자유롭게 꾸밀 수 있음
+	- 웹문서의 구조(뼈대)를 의미
+	
 * CSS를 이용한 색상 표현방법 - 3가지
+	- color: 색이름, 16진수 표기법, rgb 표기법
+	
 * CSS 애니메이션 속성 transition-duration 속성 확인
+	- 속성 애니메이션으로 애니메이션이 완료될 시간을 표시함
+	- transition-duration: 1s 또는 1ms 
+	
 * CSS 선택자란 무엇인지?
+	- 전체 선택자: * {}
+	- 타입 선택자: p, div, span {}
+	- 속성 선택자: h1[title="abc"] { }
+	- 아이디 선택자: #
+	- 클래스 선택자: . , p.abc
+	- 하위 선택자: 특정 요소 하위에 있는 요소
+	- 형제 선택자: h1 ~ p : 어떤 요소의 형제 요소를 선택
+	- 인접 형제 선택자: h1 + p : 어떤 요소의 형제 요소 중 첫 번째 요소
+	
+	- 가상클래스: 
+			1. li:empty 내용이 비어이는 요소를 찾는다
+			2. hover: 마우스 인
+			3. nth-child : 형제 요소 중 특정 순서에 있는 요소 선택 > 0부터 시작
+					nth-child(A*n + B) : (0~A) + B를 더 한 요소들(0*A + B, 1*A+B 이런식으로...) 		
+					nth-child(add): 홀수 nth-child(even): 짝수
+			4. nth-last-child: 뒤에서 부터 셈	
+			
 * HTML5 시맨틱 태그는 무엇인지?
+	- header, footer, article, section, aside, nav 태그이며 태그자체에 의미가 있다.
+	
 * HTML5 문서 상단 DOCTYPE이란?
-* HTML
-
- 요소 중 display 속성에 block level 요소와
-	inline level 요소 설명
+	- 웹문서의 버전을 지정한다.
+	
+* HTML 요소 중 display 속성에 block level 요소와 inline level 요소 설명
+	- block은 display에 줄바꿈이 들어가서 혼자 한 줄을 차지함 (span, img)
+	- inline은 한 줄에 요소들은 나란히 배치함
+	- inline-block은 inline에서 불가능하던 크기 조절이 됨
+ 
 * 자바스크립트로 HTML 요소 접근 시 (document.getElementById)
+		- getElementById("id") : 1개의 아이디값
+		- getElementsByClassName : 복수의 객체를 모두 가져옴
+		
+		- getElementsByTagName: html 태그를 선택하여 가져옴
+		
+		- querySelector: css 처럼 #, . 을 사용
+		- querySelectorAll: #, .의 값 모두를 가져옴
+		
 	id # , class . , tag, name으로 접근하는 방법 코드 작성
+	
 * 정규표현식?
+	- 특정 문자열의 제한을 두거나 찾기 위한 표현 방식
+	- /^(010)-(\d{3}|\d{4})-(\d{4}$/;
+	- / 패턴 /
+	- ^:시작, \d: 숫자형, {갯수}또는 {이상, 이하}, $:제한표시 \d{5}$ : 딱 5개만 받아라 
+	- /[A-Za-z0-9]{3,}$/ : 영대소문자, 숫자, 3자리 이상 이라는 의미
+
 * 자바스크립트란?
+	- html에 기능을 부여하는 기술, 움직임을 취하면 거기에 맞춰서 웹이 반응하게 해주는 언어
+	- jquery로도 사용함
 
 get , post방식 유무

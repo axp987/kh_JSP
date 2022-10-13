@@ -41,11 +41,57 @@
 					// 테이블의 첫번째 행의 아래에 table을 추가
 					$("#listTable tr:eq(0)").after(table);
 				},
-				error: function(data) {
+				error: function() {
 					
 				}
 			});
 		} // getData()
 		
-		getData();
+		$("#id").keyup(function() {
+			$.ajax({
+				url: "/16_Ajax/idCheck.do",
+				data: {id: $(this).val() },
+				datatype: "text",
+				success: function(data) {
+					$("span").text(data);
+				},
+				error: function() {
+					alert("통신 오류");
+				}
+			});
+		});
+		
+		
+		// 가입하기 버튼을 클릭 시 DB에 추가로 저장
+		$("#btn").on("click", function() {
+			$.ajax({
+				url: "/16_Ajax/insert.do",
+				data: $("#inForm").serialize(),
+				datatype: "text",
+				success: function(data) {
+					if(data> 0) {
+						alert("가입 완료");
+						
+						// 가입 완료 후에 다시 전체 레코드를 화면에 뿌려주기
+						getData();
+						
+						// input 태그에 입력된 내용을 지우는 작업
+						// input의 type이 text은 필드를 찾는다.
+						$("input[type=text]").each(function() {
+							$(this).val("");
+						});
+					} else {
+						alert("가입 실패");
+						
+					}
+				},
+				error: function() {
+					alert("통신 오류");
+				}
+			});
+		});
+		
+		
+	getData();
 });
+ 

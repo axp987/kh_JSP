@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
-<script type="text/javascript" src="js/customer.js"></script>
+<script type="text/javascript" src="js/cus.js"></script>
 <style type="text/css">
 	span {
 		width: 150px;
@@ -52,6 +52,7 @@
 				<tr>
 					<td>
 						<input name="id" id="id" size="15">
+						<br>
 						<span>중복결과여부</span>
 					</td>
 					<td>
@@ -79,7 +80,7 @@
 			<br>
 			<hr>
 			<h2>고객 리스트</h2>
-			<table id="listTable" cellspacing="0">
+			<table id="listTable" cellspacing="0" width="600">
 				<tr>
 					<td>번호</td>
 					<td>아이디</td>
