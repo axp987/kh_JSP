@@ -48,12 +48,10 @@
 					</td>
 					
 					<td>
-						<a href="<%=request.getContextPath() %>/admin_product_check.do">상품 목록</a>
+						<a href="<%=request.getContextPath() %>/admin_product_list.do">상품 목록</a>
 					</td>
 				</tr>
 			</table>
 			
 		<hr width="65%">
 		<br>
-</body>
-</html>

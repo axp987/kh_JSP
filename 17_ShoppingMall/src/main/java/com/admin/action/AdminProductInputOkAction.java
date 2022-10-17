@@ -18,19 +18,18 @@ public class AdminProductInputOkAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
 		// 상품 등록 폼 페이지에서 넘어온 데이터들을
 		// DB에 저장하는 비지니스 로직
 		
 		// 첨부파일이 저장될 위치(경로) 설정
-		String saveFolder = "C:\\NCS\\git\\kh_JSP\\17_ShoppingMall\\src\\main\\webapp\\image";
+		String saveFolder = "C:\\NCS\\git\\kh_JSP\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp2\\wtpwebapps\\17_ShoppingMall\\image";
 		int filesize = (1024 * 1024) * 50;	
 		// 이미지 파일을 업로드를 위한 객체 생성
 		MultipartRequest multi = new MultipartRequest(request, saveFolder, filesize, "UTF-8", new DefaultFileRenamePolicy());
 		String []arr = multi.getParameterValues("all");
-		File file = multi.getFile("image");
-		for(int i=0; i<arr.length; i++) {
-			System.out.println(arr[i]);
-		}
+		
 		// 상품명, 코드, 제조사, 이미지, 수량, 가격, 사양, 설명, 포인트
 		ProductDTO dto = new ProductDTO();
 		dto.setName(arr[0]);
@@ -45,20 +44,11 @@ public class AdminProductInputOkAction implements Action {
 		
 		File upload_file = multi.getFile("image"); 
 		String fileName = upload_file.getName(); // 파일명 찾기
-		String reFile = arr[0] + "[" + fileName + "]";
+		String reFile = arr[0] + "[" + fileName.substring(0, fileName.length()-4) + "].jpg";
 		
 		upload_file.renameTo(new File(saveFolder + "/" + reFile));
 		dto.setImage(reFile);
 		
-		
-//		if(upload_file != null) {
-//			String fileName = upload_file.getName();
-//			String reFileName = arr[0] + "[" + arr[1] + "]" + "사진";
-//			upload_file.renameTo(new File(arr[0] + "/" + arr[1]));
-//			
-//		} else {
-//			dto.setImage(null);
-//		}
 		
 		ProductDAO dao = ProductDAO.getInstnace();
 		int check = dao.insertProduct(dto);

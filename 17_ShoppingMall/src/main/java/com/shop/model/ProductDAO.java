@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -98,4 +100,155 @@ public class ProductDAO {
 		}
 		return result;
 	}
+	
+	public List<ProductDTO> getProductList() {
+		List<ProductDTO> list = new ArrayList<ProductDTO>();
+		openConn();
+		
+		try {
+			sql = "select * from shop_products";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				ProductDTO dto = new ProductDTO();
+				dto.setNo(rs.getInt("pnum"));
+				dto.setName(rs.getString("pname"));
+				dto.setCode(rs.getString("pcategory_fk"));
+				dto.setCompany(rs.getString("pcompany"));
+				dto.setImage(rs.getString("pimage"));
+				dto.setQty(rs.getInt("pqty"));
+				dto.setPrice(rs.getInt("price"));
+				dto.setSpec(rs.getString("pspec"));
+				dto.setCont(rs.getString("pcontents"));
+				dto.setPoint(rs.getInt("point"));
+				dto.setDate(rs.getString("pinputdate"));
+				
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		return list;
+	} //getProductList
+	
+	public ProductDTO productContent(int no) {
+		ProductDTO dto = null;
+		openConn();
+		
+		try {
+			sql = "select * from shop_products where pnum = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				dto = new ProductDTO();
+				dto.setNo(rs.getInt("pnum"));
+				dto.setName(rs.getString("pname"));
+				dto.setCode(rs.getString("pcategory_fk"));
+				dto.setCompany(rs.getString("pcompany"));
+				dto.setImage(rs.getString("pimage"));
+				dto.setQty(rs.getInt("pqty"));
+				dto.setPrice(rs.getInt("price"));
+				dto.setSpec(rs.getString("pspec"));
+				dto.setCont(rs.getString("pcontents"));
+				dto.setPoint(rs.getInt("point"));
+				dto.setDate(rs.getString("pinputdate"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		return dto;
+	} // productContent
+	
+	public int updateProduct(ProductDTO dto) {
+		int result = 0;
+		openConn();
+		
+		try {
+			sql = "update shop_product set (pimage = ?, pqty = ?, price = ?, pspec = ?, pcontents = ?, point = ?, where pnum = ?)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, dto.getImage());
+			pstmt.setInt(2, dto.getQty());
+			pstmt.setInt(3, dto.getPrice());
+			pstmt.setString(4, dto.getSpec());
+			pstmt.setString(5, dto.getCont());
+			pstmt.setInt(6, dto.getPoint());
+			pstmt.setInt(7, dto.getNo());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		return result;
+	} // updateProduct
+	
+	// 제품번호에 해당하는 제품을 DB에서 삭제하는 메서드
+	public int deleteProduct(int no) {
+		int result = 0;
+		openConn();
+		
+		try {
+			sql = "delete from shop_products where pnum = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			result = pstmt.executeUpdate();
+			
+			if(result > 0) {
+				sql = "update shop_products set pnum = pnum - 1 where pnum > ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, no);
+				pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		return result;
+	} // deleteProduct
+	
+	// 유저에서 오는 카테고리 코드에 해당하는 제품의 전체 리스트를 조회하는 메서드
+	public List<ProductDTO> getProductList(String code) {
+		List<ProductDTO> list = new ArrayList<ProductDTO>();
+		openConn();
+		
+		try {
+			sql = "select * from shop_products where pcategory_fk = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, code);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				ProductDTO dto = new ProductDTO();
+				dto.setNo(rs.getInt("pnum"));
+				dto.setName(rs.getString("pname"));
+				dto.setCode(rs.getString("pcategory_fk"));
+				dto.setCompany(rs.getString("pcompany"));
+				dto.setImage(rs.getString("pimage"));
+				dto.setQty(rs.getInt("pqty"));
+				dto.setPrice(rs.getInt("price"));
+				dto.setSpec(rs.getString("pspec"));
+				dto.setCont(rs.getString("pcontents"));
+				dto.setPoint(rs.getInt("point"));
+				dto.setDate(rs.getString("pinputdate"));
+				
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		return list;
+	} //getProductList
 }
