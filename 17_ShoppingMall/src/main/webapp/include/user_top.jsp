@@ -28,7 +28,7 @@
 						&nbsp;&nbsp;&nbsp;
 						<a href="<%=request.getContextPath() %>/user_cart_list.do">장바구니</a>
 						&nbsp;&nbsp;&nbsp;
-						<a href="#">${userName } 님 환영합니다.</a>
+						<a href="#">${username }님 환영합니다.</a>
 						&nbsp;&nbsp;&nbsp;
 						<a href="<%=request.getContextPath() %>/user_logout.do">로그아웃</a>
 					</td>
