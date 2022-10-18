@@ -30,7 +30,7 @@
 						&nbsp;&nbsp;&nbsp;
 						<a href="#">${username }님 환영합니다.</a>
 						&nbsp;&nbsp;&nbsp;
-						<a href="<%=request.getContextPath() %>/user_logout.do">로그아웃</a>
+						<a href="<%=request.getContextPath() %>/admin_logout.do">로그아웃</a>
 					</td>
 				</tr>
 				<tr>

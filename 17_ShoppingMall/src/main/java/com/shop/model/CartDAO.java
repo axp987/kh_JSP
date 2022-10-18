@@ -146,4 +146,29 @@ private static CartDAO instance;
 		}
 		return list;
 	} //getCartList
+	
+	// 장바구니 번호에 해당하는 장바구니 목록을 DB에서 삭제하는 메서드
+	public int deleteCart(int no) {
+		int result = 0;
+		openConn();
+		
+		try {
+			sql = "delete from shop_cart where cart_num = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			result = pstmt.executeUpdate();
+			if(result > 0) {
+				sql = "update shop_cart set cart_num = cart_num - 1 where cart_num > ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, no);
+				pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		return result;
+	}
 }
