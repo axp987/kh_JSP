@@ -42,7 +42,7 @@ public class FrontController extends HttpServlet {
 		Properties pro = new Properties();
 		
 		// mapping.properties File 선택
-		FileInputStream fis = new FileInputStream("C:\\NCS\\git\\kh_JSP\\17_ShoppingMall\\src\\main\\java\\com\\shop\\controller\\mapping.properties");
+		FileInputStream fis = new FileInputStream("C:\\Users\\user1\\git\\kh_JSP\\17_ShoppingMall\\src\\main\\java\\com\\shop\\controller\\mapping.properties");
 		// .properties 파일을 읽어드림
 		pro.load(fis);
 		// bbs_list.do와 같은 property 값을 읽어드림
