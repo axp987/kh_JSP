@@ -127,7 +127,6 @@
 <script type="text/javascript">
 	$(function() {	
 		//ajax에서 동일하게 사용되는 속성 결정
-		
 		$.ajaxSetup({
 			// ajax에서 한글 깨짐 문제 해결
 			ContentType: "application/x-www-form-urlencoded;charset=UTF-8",
@@ -156,7 +155,7 @@
 						table += "</tr>";
 						
 						table += "<tr>";
-						table += "<td colspan='2'>&nbsp;</td>;
+						table += "<td colspan='2'>&nbsp;</td>";
 						table += "</tr>";
 					});
 					
@@ -189,8 +188,9 @@
 						getList();
 						
 						// input 태그는 입력된 내용을 지원
-						$("input[type]=ext").each(function)
+					$("input[type=text]").each(function() {
 						$(this).val(""); // 입력된 값 지위기
+						}); 
 					} else {
 						alert('댓글 추가 실패 하였습니다.');
 					}

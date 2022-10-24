@@ -81,11 +81,11 @@ private static ReplyDAO instance;
 	} // closeConn
 	
 	public int getReplyInsert(ReplyDTO dto) {
-		int reuslt = 0, count =0;
+		int result = 0, count =0;
 		openConn();
 		
 		try {
-			sql = "select max(rno) from tbl_reply";
+			sql = "select count(rno) from tbl_reply";
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
@@ -98,13 +98,14 @@ private static ReplyDAO instance;
 			pstmt.setString(3, dto.getRewriter());
 			pstmt.setString(4, dto.getRecont());
 			
-			reuslt = pstmt.executeUpdate();
+			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			closeConn(rs, pstmt, con);
 		}
+		
 		return result;
 	} // getReplyInsert
 }

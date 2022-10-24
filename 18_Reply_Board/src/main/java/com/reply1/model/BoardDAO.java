@@ -159,8 +159,8 @@ private static BoardDAO instance;
 				result += "<bno>" + rs.getInt("bno") + "</bno>";
 				result += "<rewriter>" + rs.getString("rewriter") + "</rewriter>";
 				result += "<recont>" + rs.getString("recont") + "</recont>";
-				result += "<redate>" + rs.getInt("redate") + "</redate>";
-				result += "<reupdate>" + rs.getInt("reupdate") + "</reupdate>";
+				result += "<redate>" + rs.getString("redate") + "</redate>";
+				result += "<reupdate>" + rs.getString("reupdate") + "</reupdate>";
 				result += "</reply>";
 			}
 			result += "</replys>";
