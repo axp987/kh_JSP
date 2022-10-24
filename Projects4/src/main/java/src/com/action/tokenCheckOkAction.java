@@ -11,29 +11,31 @@ import src.com.controller.Action;
 import src.com.controller.ActionForward;
 import src.com.model.LoginDAO;
 import src.com.model.pmemberDTO;
+import src.com.model.userTokenDTO;
 
 public class tokenCheckOkAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		// 유저가 입력한 인증코드를 비교하는 클래스
 		HttpSession session = request.getSession();
-		String user = request.getParameter("email");
-		int sysToken =Integer.parseInt(request.getParameter("token"));
-		int inToken = Integer.parseInt(request.getParameter("inputToken"));
+//		String user = request.getParameter("email");
+//		int sysToken = Integer.parseInt(request.getParameter("token"));
+		userTokenDTO save = (userTokenDTO)session.getAttribute("user"); 
+		int inPutToken = Integer.parseInt(request.getParameter("inputToken"));
 		
 		
 		
 		PrintWriter out = response.getWriter();
 		ActionForward forward = new ActionForward();
 		
-		if(sysToken != inToken) {
+		if(save.getToken() != inPutToken) {
 			out.println("<script>"
 					+ "alert('인증번호가 일치하지 않습니다.');"
 					+ "history.back();"
 					+ "</script>");
-		} else if(sysToken == inToken) {
+		} else if(save.getToken() == inPutToken) {
 			LoginDAO loginDB = LoginDAO.getInstance();
-			int memberCheck = loginDB.MemberCheck(user);
+			int memberCheck = loginDB.MemberCheck(save.getEmail());
 			
 			if(memberCheck == 1) { // 로그인
 				pmemberDTO signIn = new pmemberDTO();

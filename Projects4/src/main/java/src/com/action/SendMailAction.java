@@ -84,6 +84,7 @@ public class SendMailAction implements Action {
 	         
 	         HttpSession session = request.getSession();
 	         session.setAttribute("user", save);
+	         
 	         forward.setRedirect(false);
 	         forward.setPath("tokenCheck.do");
 	         

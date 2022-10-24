@@ -35,9 +35,10 @@ public class LoginDAO {
 
 				// 2단계: lookup() 메소드를 이용하여 매칭되는 커넥션을 찾는다
 				DataSource ds = (DataSource)ctx.lookup("java:comp/env/jdbc/myoracle");
-				System.out.println("연결성공");
+				
 				// 3단계: DataSource 객체를 이용하여 커넥션을 하나 가져옴
 				con = ds.getConnection();
+				System.out.println("연결성공");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
