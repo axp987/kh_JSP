@@ -1,6 +1,8 @@
+<%@page import="java.util.StringTokenizer"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,10 +17,6 @@
 		<hr>
 			<c:set var="infor" value="${user }" />
 			<form id="formsubmit" method="post" action="<%=request.getContextPath() %>/tokenCheck_ok.do">
-			<%--
-				<input type="hidden" name="email" value="${infor.getEmail() }">
-				<input type="hidden" name="token" value="${infor.getToken() }">
-			 --%>
 				${infor.getEmail() }으로 보내드린 인증 코드를 입력하세요.
 				<br>
 				<input type="text" name="inputToken" id="inputToken" placeholder="인증번호를 입력해주세요.">

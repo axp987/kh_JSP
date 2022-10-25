@@ -33,10 +33,10 @@
 	<div id="member_login">
 		   <form>
 		     <div class="member_login_insert">
-		        <input type="button" value="회원가입" onclick="<%=request.getContextPath()%>/login_insert.do">
+		        <input type="button" value="회원가입" onclick="location.href='<%=request.getContextPath()%>/inputEmail.do'">
 		     </div>
 		    <div class="member_login_input">
-		       <input type="button" value="로그인">
+		       <input type="button" value="로그인" onclick="location.href='<%=request.getContextPath()%>/inputEmail.do'">
 		    </div>
 					
 			<hr>

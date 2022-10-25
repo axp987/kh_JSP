@@ -23,11 +23,12 @@ public class tokenCheckOkAction implements Action {
 		userTokenDTO save = (userTokenDTO)session.getAttribute("user"); 
 		int inPutToken = Integer.parseInt(request.getParameter("inputToken"));
 		
-		
+		//session.setMaxInactiveInterval(3*60); 세션 3분 후에 종료
 		
 		PrintWriter out = response.getWriter();
 		ActionForward forward = new ActionForward();
-		
+		System.out.println("user: " + save);
+		System.out.println("Token: " + inPutToken);
 		if(save.getToken() != inPutToken) {
 			out.println("<script>"
 					+ "alert('인증번호가 일치하지 않습니다.');"

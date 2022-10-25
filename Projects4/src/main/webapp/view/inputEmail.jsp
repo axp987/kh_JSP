@@ -13,7 +13,7 @@
 		$.ajaxSetup({
 			// ajax에서 한글 깨짐 문제 해결
 			ContentType: "application/x-www-form-urlencoded;charset=UTF-8",
-			type="get"
+			type="post"
 		});
 	});
 </script>

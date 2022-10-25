@@ -83,6 +83,7 @@ public class SendMailAction implements Action {
 	         save.setToken(ranNum);
 	         
 	         HttpSession session = request.getSession();
+	         session.setAttribute("membermail", fullEmail);
 	         session.setAttribute("user", save);
 	         
 	         forward.setRedirect(false);
